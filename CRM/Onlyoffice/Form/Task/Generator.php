@@ -49,8 +49,14 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     $params = $this->exportValues();
     $this->_contactIds;
 
+    // get tokens
+    //$tokens = CRM_Onlyoffice_OnlyOffice::getSingleton()->extractTokes($params['template_file_id']);
+
     foreach ($this->_contactIds as $contactId) {
       // TODO: generate PDF for $params['template_file_id']
+      //$contact_tokens = Civi::fillTokens($tokens, $contactId);
+      // $pdf = CRM_Onlyoffice_OnlyOffice::getSingleton()->renderPDF($contact_tokens);
+      // ziparchive pdf
     }
 
     //$data = "sadkhsaldas";
