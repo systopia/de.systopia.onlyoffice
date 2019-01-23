@@ -3,6 +3,28 @@
 require_once 'onlyoffice.civix.php';
 use CRM_Onlyoffice_ExtensionUtil as E;
 
+
+/**
+ * Add an action for creating donation receipts after doing a search
+ *
+ * @param string $objectType specifies the component
+ * @param array $tasks the list of actions
+ *
+ * @access public
+ */
+function onlyoffice_civicrm_searchTasks($objectType, &$tasks) {
+  // add DONATION RECEIPT task to contact list
+  if ($objectType == 'contact') {
+    $tasks[] = array(
+        'title' => E::ts("OnlyOffice-Me!"),
+        'class' => 'CRM_Onlyoffice_Form_Task_Generator',
+        'result' => false);
+  }
+}
+
+
+
+
 /**
  * Implements hook_civicrm_config().
  *
@@ -134,30 +156,3 @@ function onlyoffice_civicrm_entityTypes(&$entityTypes) {
   _onlyoffice_civix_civicrm_entityTypes($entityTypes);
 }
 
-// --- Functions below this ship commented out. Uncomment as required. ---
-
-/**
- * Implements hook_civicrm_preProcess().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
- *
-function onlyoffice_civicrm_preProcess($formName, &$form) {
-
-} // */
-
-/**
- * Implements hook_civicrm_navigationMenu().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
- *
-function onlyoffice_civicrm_navigationMenu(&$menu) {
-  _onlyoffice_civix_insert_navigation_menu($menu, 'Mailings', array(
-    'label' => E::ts('New subliminal message'),
-    'name' => 'mailing_subliminal_message',
-    'url' => 'civicrm/mailing/subliminal',
-    'permission' => 'access CiviMail',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _onlyoffice_civix_navigationMenu($menu);
-} // */
