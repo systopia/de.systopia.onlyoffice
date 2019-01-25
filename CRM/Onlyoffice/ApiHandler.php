@@ -38,15 +38,51 @@ class CRM_Onlyoffice_ApiHandler {
     );
     $authenticationResult = $this->makeApiRequest('authentication', $authenticationData);
     $this->token = $authenticationResult->response->token;
+  /**
+   * List all files of the authenticated user.
+   * @return An array with multiple objects descriping the files.
+   */
+  public function files() {
+    $result = $this->getRequest('files/@my');
+
+    return $result->response->files;
+
+    // TODO: Test for returned status code.
   }
 
-  private function makeApiRequest($method, $data) {
+  /**
+   * Make a GET request to the API without custom data.
+   * @return A JSON decoded object of the returned data.
+   */
+  private function getRequest($method) {
     $options = array(
       'http' => array(
-        'method'  => 'POST',
+        'method' => 'GET',
+        'header'=> "Accept: application/json\r\n" .
+          'Authorization:' . $this->token . "\r\n"
+      )
+    );
+
+    $url = $this->baseUrl . $method;
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    return json_decode($result);
+  }
+
+  /**
+   * Make a POST request to the API with JSON encoded custom data.
+   * @return A JSON decoded object of the returned data.
+   */
+  private function postRequest($method, $data) {
+    $options = array(
+      'http' => array(
+        'method' => 'POST',
         'content' => json_encode($data),
-        'header'=>  "Content-Type: application/json\r\n" .
-          "Accept: application/json\r\n"
+        'header'=> "Content-Type: application/json\r\n" .
+          "Accept: application/json\r\n" .
+          'Authorization:' . $this->token . "\r\n"
       )
     );
 

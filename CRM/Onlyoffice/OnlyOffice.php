@@ -41,4 +41,19 @@ class CRM_Onlyoffice_OnlyOffice {
 
     $this->apiHandler->authenticate($settings['user_name'], $settings['user_password']);
   }
+
+  /**
+   * Get all templates.
+   * @return An array of all templates in the form "id => title".
+   */
+  public function getTemplates() {
+    $files = $this->apiHandler->files();
+
+    $templates = [];
+    foreach ($files as $file) {
+      $templates[$file->id] = $file->title;
+    }
+
+    return $templates;
+  }
 }

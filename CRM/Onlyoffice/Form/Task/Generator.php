@@ -67,15 +67,6 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
 
 
   protected function getTemplates() {
-    // TODO: implement
-    $base_url = CRM_Onlyoffice_Configuration::getSetting('base_url');
-    // TODO: user/pwd + authentification
-
-    // TODO: CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates();
-    // magic
-    return [
-        1   => 'Beispiel1',
-        243 => 'Beispiel2'
-    ];
+     return CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates();
   }
 }
