@@ -34,6 +34,22 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
     );
     $this->addRule('base_url', ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
 
+    $this->add(
+      'text',
+      'user_name',
+      E::ts("OnlyOffice user name"),
+      ['class' => 'huge'],
+      TRUE
+    );
+
+    $this->add(
+      'password',
+      'user_password',
+      E::ts("OnlyOffice user password"),
+      ['class' => 'huge'],
+      TRUE
+    );
+
     $settings = CRM_Onlyoffice_Configuration::getSettings();
     $this->setDefaults($settings);
 

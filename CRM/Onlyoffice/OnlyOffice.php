@@ -16,10 +16,29 @@
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 /**
- * Form controller class
- *
- * @see https://wiki.civicrm.org/confluence/display/CRMDOC/QuickForm+Reference
+ * General handling class
  */
 class CRM_Onlyoffice_OnlyOffice {
 
+  private static $singleton = NULL;
+  public $apiHandler = NULL;
+
+  /**
+  * Get the Onlyoffice controller singleton
+  */
+  public static function getSingleton() {
+    if (self::$singleton === NULL) {
+      self::$singleton = new CRM_Onlyoffice_OnlyOffice();
+    }
+    return self::$singleton;
+  }
+
+  function __construct() {
+    $settings = CRM_Onlyoffice_Configuration::getSettings();
+
+    $this->apiHandler = new CRM_Onlyoffice_ApiHandler();
+    $this->apiHandler->setBaseUrl($settings['base_url']);
+
+    $this->apiHandler->authenticate($settings['user_name'], $settings['user_password']);
+  }
 }

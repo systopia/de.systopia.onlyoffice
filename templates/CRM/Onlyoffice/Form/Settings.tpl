@@ -18,6 +18,16 @@
   <div class="content">{$form.base_url.html}</div>
   <div class="clear"></div>
 </div>
+<div class="crm-section">
+  <div class="label">{$form.user_name.label}</div>
+  <div class="content">{$form.user_name.html}</div>
+  <div class="clear"></div>
+</div>
+<div class="crm-section">
+  <div class="label">{$form.user_password.label}</div>
+  <div class="content">{$form.user_password.html}</div>
+  <div class="clear"></div>
+</div>
 
 
 {* FOOTER *}
