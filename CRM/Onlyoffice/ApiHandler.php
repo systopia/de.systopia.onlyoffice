@@ -19,8 +19,11 @@
 class CRM_Onlyoffice_ApiHandler {
 
   private $baseUrl;
-  public $token;
+  private $token;
 
+  /**
+   * Generates base URL for API usage based on a given server domain.
+   */
   public function setBaseUrl($url) {
     // TODO: Test for empty base URL setting and give out error.
     if (mb_substr($url, -1) != '/')
@@ -29,15 +32,21 @@ class CRM_Onlyoffice_ApiHandler {
     $this->baseUrl = $url;
   }
 
-  public function authenticate($name, $password)
-  {
-    //Authenticate on server via username and password to get a token.
-    $authenticationData = array(
+  /**
+   * Authenticates on server via username and password to get a token.
+   */
+  public function authenticate($name, $password) {
+    $data = array(
       'userName' => $name,
       'password' => $password
     );
-    $authenticationResult = $this->makeApiRequest('authentication', $authenticationData);
-    $this->token = $authenticationResult->response->token;
+    $result = $this->postRequest('authentication', $data);
+    $this->token = $result->response->token;
+
+    // TODO: Test for returned status code.
+    // TODO: Save token in settings and only renew it when necessary (see response->expires).
+  }
+
   /**
    * List all files of the authenticated user.
    * @return An array with multiple objects descriping the files.

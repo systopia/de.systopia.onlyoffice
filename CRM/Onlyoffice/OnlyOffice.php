@@ -21,7 +21,7 @@ use CRM_Onlyoffice_ExtensionUtil as E;
 class CRM_Onlyoffice_OnlyOffice {
 
   private static $singleton = NULL;
-  public $apiHandler = NULL;
+  private $apiHandler = NULL;
 
   /**
   * Get the Onlyoffice controller singleton
