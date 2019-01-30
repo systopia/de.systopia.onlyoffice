@@ -18,7 +18,7 @@
  */
 class CRM_Onlyoffice_ApiHandler {
 
-  private $baseUrl;
+  private $baseUrl; //Guaranteed to end with a slash.
   private $token;
 
   /**
@@ -40,7 +40,7 @@ class CRM_Onlyoffice_ApiHandler {
       'userName' => $name,
       'password' => $password
     );
-    $result = $this->postRequest('authentication', $data);
+    $result = $this->makePostRequest('authentication', $data);
     $this->token = $result->response->token;
 
     // TODO: Test for returned status code.
@@ -73,10 +73,10 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * List all files of the authenticated user.
-   * @return An array with multiple objects descriping the files.
+   * @return array An array with multiple objects descriping the files.
    */
   public function files() {
-    $result = $this->getRequest('files/@my');
+    $result = $this->makeGetRequest('files/@my');
 
     return $result->response->files;
 
@@ -84,10 +84,10 @@ class CRM_Onlyoffice_ApiHandler {
   }
 
   /**
-   * Make a GET request to the API without custom data.
-   * @return A JSON decoded object of the returned data.
+   * Makes a GET request to the API without custom data.
+   * @return object A JSON decoded object of the returned data.
    */
-  private function getRequest($method) {
+  private function makeGetRequest($method) {
     $options = array(
       'http' => array(
         'method' => 'GET',
@@ -102,13 +102,15 @@ class CRM_Onlyoffice_ApiHandler {
     $result = file_get_contents($url, false, $context);
 
     return json_decode($result);
+
+    // TODO: Test for returned status code?
   }
 
   /**
-   * Make a POST request to the API with JSON encoded custom data.
-   * @return A JSON decoded object of the returned data.
+   * Makes a POST request to the API with JSON encoded custom data.
+   * @return object A JSON decoded object of the returned data.
    */
-  private function postRequest($method, $data) {
+  private function makePostRequest($method, $data) {
     $options = array(
       'http' => array(
         'method' => 'POST',
@@ -125,6 +127,8 @@ class CRM_Onlyoffice_ApiHandler {
     $result = file_get_contents($url, false, $context);
 
     return json_decode($result);
+
+    // TODO: Test for returned status code?
   }
 
   private function getRequestHeader($method) {

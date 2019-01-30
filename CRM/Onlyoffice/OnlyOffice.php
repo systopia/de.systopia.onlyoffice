@@ -36,15 +36,20 @@ class CRM_Onlyoffice_OnlyOffice {
   function __construct() {
     $settings = CRM_Onlyoffice_Configuration::getSettings();
 
+    $baseUrl = $settings['base_url'];
+    $userName = $settings['user_name'];
+    $userPassword = $settings['user_password'];
+
     $this->apiHandler = new CRM_Onlyoffice_ApiHandler();
-    $this->apiHandler->setBaseUrl($settings['base_url']);
+    $this->apiHandler->setBaseUrl($baseUrl);
+    $this->apiHandler->authenticate($userName, $userPassword);
 
     $this->apiHandler->authenticate($settings['user_name'], $settings['user_password']);
   }
 
   /**
    * Get all templates.
-   * @return An array of all templates in the form "id => title".
+   * @return array  An array of all templates in the form "id => title".
    */
   public function getTemplates() {
     $files = $this->apiHandler->files();
