@@ -48,6 +48,30 @@ class CRM_Onlyoffice_ApiHandler {
   }
 
   /**
+   * Extracts the session cookies from the API for website wide use.
+   * @return string A cookie string containing all needed session cookies.
+   */
+  public function getSessionCookies() {
+    $headerArray = $this->getRequestHeader('capabilities');
+
+    $headerString = implode("\n", $headerArray);
+
+    preg_match_all('/Set-Cookie: (.*)\b/', $headerString, $rawCookies);
+
+    $rawCookies = $rawCookies[1]; //We only need the part after "Set-Cookie".
+
+    $cookies = [];
+    foreach ($rawCookies as $rawCookie) {
+      $bakedCookie = explode('; ', $rawCookie);
+      $cookies[] = $bakedCookie[0]; //Actually cookie is the first entry.
+    }
+
+    $sessionCookies = implode('; ', $cookies);
+
+    return $sessionCookies;
+  }
+
+  /**
    * List all files of the authenticated user.
    * @return An array with multiple objects descriping the files.
    */
@@ -101,5 +125,24 @@ class CRM_Onlyoffice_ApiHandler {
     $result = file_get_contents($url, false, $context);
 
     return json_decode($result);
+  }
+
+  private function getRequestHeader($method) {
+    $options = array(
+      'http' => array(
+        'method' => 'GET',
+        'header'=> "Accept: application/json\r\n" .
+          'Authorization:' . $this->token . "\r\n"
+      )
+    );
+
+    $url = $this->baseUrl . $method;
+
+    $context  = stream_context_create($options);
+    $header = get_headers($url, 0, $context);
+
+    return $header;
+
+    // TODO: Test for returned status code?
   }
 }
