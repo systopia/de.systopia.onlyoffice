@@ -49,6 +49,8 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     $params = $this->exportValues();
     $this->_contactIds;
 
+    CRM_Onlyoffice_OnlyOffice::getSingleton()->downloadTemplateFile($params['template_file_id']);
+
     // get tokens
     //$tokens = CRM_Onlyoffice_OnlyOffice::getSingleton()->extractTokes($params['template_file_id']);
 

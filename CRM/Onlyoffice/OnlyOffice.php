@@ -64,4 +64,13 @@ class CRM_Onlyoffice_OnlyOffice {
 
     return $templates;
   }
+
+  public function downloadTemplateFile($fileId) {
+    // TODO: Change direct download for testing with something sane.
+
+    $fileStream = $this->websiteHandler->downloadFile($fileId);
+
+    CRM_Utils_System::download('Test.docx', 'application/docx', $fileStream);
+  }
+
 }
