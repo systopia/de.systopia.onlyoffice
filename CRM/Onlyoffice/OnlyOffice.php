@@ -22,6 +22,7 @@ class CRM_Onlyoffice_OnlyOffice {
 
   private static $singleton = NULL;
   private $apiHandler = NULL;
+  private $websiteHandler = NULL;
 
   /**
   * Get the Onlyoffice controller singleton
@@ -44,7 +45,9 @@ class CRM_Onlyoffice_OnlyOffice {
     $this->apiHandler->setBaseUrl($baseUrl);
     $this->apiHandler->authenticate($userName, $userPassword);
 
-    $this->apiHandler->authenticate($settings['user_name'], $settings['user_password']);
+    $this->websiteHandler = new CRM_Onlyoffice_WebsiteHandler();
+    $this->websiteHandler->setBaseUrl($baseUrl);
+    $this->websiteHandler->setSessionCookies($this->apiHandler->getSessionCookies());
   }
 
   /**
