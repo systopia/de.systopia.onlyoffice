@@ -52,6 +52,13 @@ class CRM_Onlyoffice_WebsiteHandler {
     return $fileStream;
   }
 
+  public function downloadFileAsPdf($fileId) {
+    $downloadUrl = 'products/files/httphandlers/filehandler.ashx?action=download&outputtype=.pdf&fileid=' . $fileId;
+    $fileStream = $this->makeGetRequest($downloadUrl);
+
+    return $fileStream;
+  }
+
   /**
    * Makes a GET request to the website without custom data.
    */

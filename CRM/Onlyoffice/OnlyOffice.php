@@ -70,7 +70,17 @@ class CRM_Onlyoffice_OnlyOffice {
 
     $fileStream = $this->websiteHandler->downloadFile($fileId);
 
-    CRM_Utils_System::download('Test.docx', 'application/docx', $fileStream);
+    $uploadedFileData = $this->apiHandler->uploadDocx('Test.docx', $fileStream);
+
+    $fileStream = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
+
+    $this->apiHandler->deleteFile($uploadedFileData->id);
+    
+    CRM_Utils_System::download('Test.pdf', 'application/pdf', $fileStream);
   }
 
+  public function makeReadyFilesFromTemplateFile() {
+    // TODO: Give better name.
+    // TODO: implement with the help of https://github.com/PHPOffice/PHPWord.
+  }
 }

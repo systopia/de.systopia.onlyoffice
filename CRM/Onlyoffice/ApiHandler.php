@@ -83,6 +83,28 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code.
   }
 
+  public function uploadDocx($fileName, $file) {
+    $result = $this->makePostRequestAsDocx('files/@my/upload', $fileName, $file);
+
+    return $result->response;
+
+    // TODO: Test for returned status code.
+  }
+
+  public function deleteFile($fileId) {
+    $data = [
+      'fileId' => $fileId,
+      'deleteAfter' => false, //Don't delete after request is finished.
+      'immediately' => true //Don't move to recycle bin.
+    ];
+
+    $result = $this->makeDeleteRequest('files/file/' . $fileId, $data);
+
+    return $result;
+
+    // TODO: Test for returned status code.
+  }
+
   /**
    * Makes a GET request to the API without custom data.
    * @param $method string The target method of the API.
@@ -132,6 +154,19 @@ class CRM_Onlyoffice_ApiHandler {
       "Accept: application/json\r\n";
 
     $result = $this->makeRawRequest($method, $header, $file);
+
+    return json_decode($result);
+
+    // TODO: Test for returned status code?
+  }
+
+  private function makeDeleteRequest($method, $data) {
+    $header = "Content-Type: application/json\r\n" .
+      "Accept: application/json\r\n";
+
+    $jsonData = json_encode($data);
+
+    $result = $this->makeRawRequest($method, $header, $jsonData, true);
 
     return json_decode($result);
 
