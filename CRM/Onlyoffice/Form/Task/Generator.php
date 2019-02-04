@@ -49,26 +49,70 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     $params = $this->exportValues();
     $this->_contactIds;
 
-    CRM_Onlyoffice_OnlyOffice::getSingleton()->downloadTemplateFile($params['template_file_id']);
+    $templateFileString = CRM_Onlyoffice_OnlyOffice::getSingleton()->downloadTemplateFile($params['template_file_id']);
 
-    // get tokens
-    //$tokens = CRM_Onlyoffice_OnlyOffice::getSingleton()->extractTokes($params['template_file_id']);
+    $zipContainer = $this->createZipFile();
+
+    $zipContainer->addFromString('template.docx', $templateFileString);
 
     foreach ($this->_contactIds as $contactId) {
+      $tempFileName = $this->stringToTempFile($templateFileString);
+
+      $tokenList = ['MEINNAME' => $contactId];
+
+      CRM_Onlyoffice_OnlyOffice::getSingleton()->makeReadyFileFromTemplateFile($tempFileName, $tokenList);
+
+      $tempFileString = $this->tempFileToString($tempFileName, true);
+
+      $readyTemplatedFileString = CRM_Onlyoffice_OnlyOffice::getSingleton()->convertDocxToPdf($tempFileString);
+
+      $zipContainer->addFromString($contactId . '.pdf', $readyTemplatedFileString);
+
       // TODO: generate PDF for $params['template_file_id']
       //$contact_tokens = Civi::fillTokens($tokens, $contactId);
       // $pdf = CRM_Onlyoffice_OnlyOffice::getSingleton()->renderPDF($contact_tokens);
       // ziparchive pdf
     }
 
-    //$data = "sadkhsaldas";
-    //CRM_Utils_System::download('Test.txt', 'application/text', $data);
+    $zipContainerFilename = $zipContainer->filename;
+    $zipContainer->close();
+    $resultZip = $this->tempFileToString($zipContainerFilename, true);
 
-    //CRM_Utils_System::redirect("https://sustainability.asda.com/sites/default/files/Green%20Britain%20Index%202016%20web_2.pdf");
+    CRM_Utils_System::download('Test.zip', 'application/zip', $resultZip);
   }
-
 
   protected function getTemplates() {
      return CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates();
+  }
+
+  private function createZipFile() {
+    $tempFileName = tempnam(sys_get_temp_dir(), 'CiviCRM_OnlyOffice_ZipResultFile_');
+
+    $zip = new ZipArchive();
+    $zip->open($tempFileName, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
+    // TODO: Check if there is an error when creating the zip file.
+
+    return $zip;
+  }
+
+  private function stringToTempFile($fileString) {
+    $tempFileName = tempnam(sys_get_temp_dir(), 'CiviCRM_OnlyOffice_TemplateFile_');
+
+    $handle = fopen($tempFileName, "w");
+    fwrite($handle, $fileString);
+    fclose($handle);
+
+    return $tempFileName;
+  }
+
+  private function tempFileToString($tempFileName, $deleteAfterReadout = false) {
+    $handle = fopen($tempFileName, "r");
+    $content = fread($handle, filesize($tempFileName));
+    fclose($handle);
+
+    if ($deleteAfterReadout)
+      unlink($tempFileName);
+
+    return $content;
   }
 }

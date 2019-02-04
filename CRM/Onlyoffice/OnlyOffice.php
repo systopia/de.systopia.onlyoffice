@@ -65,22 +65,47 @@ class CRM_Onlyoffice_OnlyOffice {
     return $templates;
   }
 
+  /**
+   * Downloads a template file as string.
+   * @param $fileId string The id of the file to download.
+   * @return false|string The file stream of the downloaded file.
+   */
   public function downloadTemplateFile($fileId) {
-    // TODO: Change direct download for testing with something sane.
-
     $fileStream = $this->websiteHandler->downloadFile($fileId);
 
-    $uploadedFileData = $this->apiHandler->uploadDocx('Test.docx', $fileStream);
+    return $fileStream;
 
-    $fileStream = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
-
-    $this->apiHandler->deleteFile($uploadedFileData->id);
-    
-    CRM_Utils_System::download('Test.pdf', 'application/pdf', $fileStream);
+    //CRM_Utils_System::download('Test.pdf', 'application/pdf', $fileStream);
   }
 
-  public function makeReadyFilesFromTemplateFile() {
+  public function makeReadyFileFromTemplateFile($tempFileName, $tokenList) {
     // TODO: Give better name.
-    // TODO: implement with the help of https://github.com/PHPOffice/PHPWord.
+
+    // TODO: Are keys and values both in the same order?
+    $tokenKeys = array_keys($tokenList);
+    $tokenValues = array_values($tokenList);
+
+    $zip = new ZipArchive();
+    $zip->open($tempFileName);
+    // TODO: Check if there is an error when opening the zip file.
+
+    $numberOfFiles = $zip->numFiles;
+    for ($i = 0; $i < $numberOfFiles; $i++) {
+      $fileContent = $zip->getFromIndex($i);
+      $fileContent = str_replace($tokenKeys, $tokenValues, $fileContent);
+      $zip->addFromString($zip->getNameIndex($i), $fileContent);
+    }
+
+    $zip->close();
+  }
+
+  public function convertDocxToPdf($inputFileStream) {
+    $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileStream);
+
+    $outputFileStream = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
+
+    $this->apiHandler->deleteFile($uploadedFileData->id);
+
+    return $outputFileStream;
   }
 }
