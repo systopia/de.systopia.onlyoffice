@@ -55,7 +55,7 @@ class CRM_Onlyoffice_OnlyOffice {
    * @return array  An array of all templates in the form "id => title".
    */
   public function getTemplates() {
-    $files = $this->apiHandler->files();
+    $files = $this->apiHandler->listFiles();
 
     $templates = [];
     foreach ($files as $file) {

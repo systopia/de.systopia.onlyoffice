@@ -36,11 +36,11 @@ class CRM_Onlyoffice_ApiHandler {
    * Authenticates on server via username and password to get a token.
    */
   public function authenticate($name, $password) {
-    $data = array(
+    $data = [
       'userName' => $name,
       'password' => $password
-    );
-    $result = $this->makePostRequest('authentication', $data);
+    ];
+    $result = $this->makePostRequestAsJson('authentication', $data);
     $this->token = $result->response->token;
 
     // TODO: Test for returned status code.
@@ -73,9 +73,9 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * List all files of the authenticated user.
-   * @return array An array with multiple objects descriping the files.
+   * @return array An array with multiple objects describing the files.
    */
-  public function files() {
+  public function listFiles() {
     $result = $this->makeGetRequest('files/@my');
 
     return $result->response->files;
@@ -85,6 +85,7 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a GET request to the API without custom data.
+   * @param $method string The target method of the API.
    * @return object A JSON decoded object of the returned data.
    */
   private function makeGetRequest($method) {
@@ -108,16 +109,49 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a POST request to the API with JSON encoded custom data.
+   * @param $method string The target method of the API.
+   * @param $data string The body content for the request.
    * @return object A JSON decoded object of the returned data.
    */
-  private function makePostRequest($method, $data) {
+  private function makePostRequestAsJson($method, $data) {
+    $header = "Content-Type: application/json\r\n" .
+              "Accept: application/json\r\n";
+
+    $jsonData = json_encode($data);
+
+    $result = $this->makeRawRequest($method, $header, $jsonData);
+
+    return json_decode($result);
+
+    // TODO: Test for returned status code?
+  }
+
+  private function makePostRequestAsDocx($method, $fileName, $file) {
+    $header = 'Content-Disposition: inline; filename="' . $fileName . '"' . "\r\n" .
+      'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document' . "\r\n" .
+      "Accept: application/json\r\n";
+
+    $result = $this->makeRawRequest($method, $header, $file);
+
+    return json_decode($result);
+
+    // TODO: Test for returned status code?
+  }
+
+  /**
+   * Makes a POST/DELETE request to the API with custom header and data.
+   * @param $method string The target method of the API.
+   * @param $header string The header for the request.
+   * @param $data string The body content for the request.
+   * @param $isDelete boolean If true, the request type will be DELETE instead of POST.
+   * @return false|string The response body.
+   */
+  private function makeRawRequest($method, $header, $data, $isDelete = false) {
     $options = array(
       'http' => array(
-        'method' => 'POST',
-        'content' => json_encode($data),
-        'header'=> "Content-Type: application/json\r\n" .
-          "Accept: application/json\r\n" .
-          'Authorization:' . $this->token . "\r\n"
+        'method' => $isDelete ? 'DELETE' : 'POST',
+        'content' => $data,
+        'header'=> 'Authorization:' . $this->token . "\r\n" . $header
       )
     );
 
@@ -126,7 +160,7 @@ class CRM_Onlyoffice_ApiHandler {
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
 
-    return json_decode($result);
+    return $result;
 
     // TODO: Test for returned status code?
   }
