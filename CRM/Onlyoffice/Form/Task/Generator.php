@@ -58,9 +58,7 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     foreach ($this->_contactIds as $contactId) {
       $tempFileName = $this->stringToTempFile($templateFileString);
 
-      $tokenList = ['MEINNAME' => $contactId];
-
-      CRM_Onlyoffice_OnlyOffice::getSingleton()->makeReadyFileFromTemplateFile($tempFileName, $tokenList);
+      CRM_Onlyoffice_OnlyOffice::getSingleton()->makeReadyFileFromTemplateFile($tempFileName, $contactId);
 
       $tempFileString = $this->tempFileToString($tempFileName, true);
 

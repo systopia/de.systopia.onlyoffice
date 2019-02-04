@@ -78,22 +78,40 @@ class CRM_Onlyoffice_OnlyOffice {
     //CRM_Utils_System::download('Test.pdf', 'application/pdf', $fileStream);
   }
 
-  public function makeReadyFileFromTemplateFile($tempFileName, $tokenList) {
+  public function makeReadyFileFromTemplateFile($tempFileName, $contactId) {
     // TODO: Give better name.
-
-    // TODO: Are keys and values both in the same order?
-    $tokenKeys = array_keys($tokenList);
-    $tokenValues = array_values($tokenList);
 
     $zip = new ZipArchive();
     $zip->open($tempFileName);
     // TODO: Check if there is an error when opening the zip file.
 
+    $processor = new \Civi\Token\TokenProcessor(Civi::service('dispatcher'), array(
+      'controller' => __CLASS__,
+      'smarty' => FALSE,
+    ));
+
+    $fileList = [];
+
     $numberOfFiles = $zip->numFiles;
     for ($i = 0; $i < $numberOfFiles; $i++) {
       $fileContent = $zip->getFromIndex($i);
-      $fileContent = str_replace($tokenKeys, $tokenValues, $fileContent);
-      $zip->addFromString($zip->getNameIndex($i), $fileContent);
+      $fileName = $zip->getNameIndex($i);
+
+      $processor->addMessage($fileName, $fileContent , 'text/plain');
+
+      $fileList[] = $fileName;
+    }
+
+    $processor->addRow()->context('contactId', $contactId);
+
+    $processor->evaluate();
+
+    foreach ($processor->getRows() as $row) {
+      foreach ($fileList as $fileName) {
+        $fileContent = $row->render($fileName);
+
+        $zip->addFromString($fileName, $fileContent);
+      }
     }
 
     $zip->close();
