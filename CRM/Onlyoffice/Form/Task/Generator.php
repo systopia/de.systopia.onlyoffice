@@ -70,6 +70,7 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     $zipContainer->close();
     $resultZip = $this->tempFileToString($zipContainerFilename, true);
 
+    // TODO: Rename "Test.zip" to something with the name of the template.
     CRM_Utils_System::download('Test.zip', 'application/zip', $resultZip);
   }
 

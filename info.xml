@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <extension key="de.systopia.onlyoffice" type="module">
   <file>onlyoffice</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
+  <name>OnlyOffice Integration</name>
+  <description>Integrates OnlyOffice as a document editor into CiviCRM to make writing letters easier.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>B. Endres</author>
+    <author>B. Endres; B. Zschiedrich</author>
     <email>endres@systopia.de</email>
   </maintainer>
   <urls>
-    <url desc="Main Extension Page">http://FIXME</url>
-    <url desc="Documentation">http://FIXME</url>
-    <url desc="Support">http://FIXME</url>
+    <url desc="Main Extension Page">https://github.com/systopia/de.systopia.onlyoffice</url>
+    <url desc="Documentation">https://github.com/systopia/de.systopia.onlyoffice/blob/master/README.md</url>
+    <url desc="Support">https://github.com/systopia/de.systopia.onlyoffice/issues</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
   <releaseDate></releaseDate>
@@ -20,7 +20,7 @@
   <compatibility>
     <ver>5.0</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
+  <comments>This is a proof of concept.</comments>
   <civix>
     <namespace>CRM/Onlyoffice</namespace>
   </civix>

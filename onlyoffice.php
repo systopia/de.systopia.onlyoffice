@@ -16,7 +16,7 @@ function onlyoffice_civicrm_searchTasks($objectType, &$tasks) {
   // add DONATION RECEIPT task to contact list
   if ($objectType == 'contact') {
     $tasks[] = array(
-        'title' => E::ts("OnlyOffice-Me!"),
+        'title' => E::ts("Create PDFs via OnlyOffice"),
         'class' => 'CRM_Onlyoffice_Form_Task_Generator',
         'result' => false);
   }
