@@ -43,20 +43,20 @@ class CRM_Onlyoffice_WebsiteHandler {
   /**
    * Download a file from the server.
    * @param string $fileId
-   * @return false|string The file stream of the downloaded file.
+   * @return false|string The downloaded file as string.
    */
   public function downloadFile($fileId) {
     $downloadUrl = 'products/files/httphandlers/filehandler.ashx?action=download&fileid=' . $fileId;
-    $fileStream = $this->makeGetRequest($downloadUrl);
+    $fileString = $this->makeGetRequest($downloadUrl);
 
-    return $fileStream;
+    return $fileString;
   }
 
   public function downloadFileAsPdf($fileId) {
     $downloadUrl = 'products/files/httphandlers/filehandler.ashx?action=download&outputtype=.pdf&fileid=' . $fileId;
-    $fileStream = $this->makeGetRequest($downloadUrl);
+    $fileString = $this->makeGetRequest($downloadUrl);
 
-    return $fileStream;
+    return $fileString;
   }
 
   /**

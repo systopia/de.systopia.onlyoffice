@@ -68,14 +68,12 @@ class CRM_Onlyoffice_OnlyOffice {
   /**
    * Downloads a template file as string.
    * @param $fileId string The id of the file to download.
-   * @return false|string The file stream of the downloaded file.
+   * @return false|string The downloaded file as string.
    */
   public function downloadTemplateFile($fileId) {
-    $fileStream = $this->websiteHandler->downloadFile($fileId);
+    $fileString = $this->websiteHandler->downloadFile($fileId);
 
-    return $fileStream;
-
-    //CRM_Utils_System::download('Test.pdf', 'application/pdf', $fileStream);
+    return $fileString;
   }
 
   public function makeReadyFileFromTemplateFile($tempFileName, $contactId) {
@@ -117,13 +115,13 @@ class CRM_Onlyoffice_OnlyOffice {
     $zip->close();
   }
 
-  public function convertDocxToPdf($inputFileStream) {
-    $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileStream);
+  public function convertDocxToPdf($inputFileString) {
+    $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileString);
 
-    $outputFileStream = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
+    $outputFileString = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
 
     $this->apiHandler->deleteFile($uploadedFileData->id);
 
-    return $outputFileStream;
+    return $outputFileString;
   }
 }

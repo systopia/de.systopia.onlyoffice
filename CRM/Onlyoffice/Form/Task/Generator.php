@@ -47,7 +47,6 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
    */
   function postProcess() {
     $params = $this->exportValues();
-    $this->_contactIds;
 
     $templateFileString = CRM_Onlyoffice_OnlyOffice::getSingleton()->downloadTemplateFile($params['template_file_id']);
 
@@ -62,14 +61,9 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
 
       $tempFileString = $this->tempFileToString($tempFileName, true);
 
-      $readyTemplatedFileString = CRM_Onlyoffice_OnlyOffice::getSingleton()->convertDocxToPdf($tempFileString);
+      $readyFileString = CRM_Onlyoffice_OnlyOffice::getSingleton()->convertDocxToPdf($tempFileString);
 
-      $zipContainer->addFromString($contactId . '.pdf', $readyTemplatedFileString);
-
-      // TODO: generate PDF for $params['template_file_id']
-      //$contact_tokens = Civi::fillTokens($tokens, $contactId);
-      // $pdf = CRM_Onlyoffice_OnlyOffice::getSingleton()->renderPDF($contact_tokens);
-      // ziparchive pdf
+      $zipContainer->addFromString($contactId . '.pdf', $readyFileString);
     }
 
     $zipContainerFilename = $zipContainer->filename;
