@@ -77,6 +77,10 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
      return CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates();
   }
 
+  /**
+   * Creates a zip file with unique name in the system temporary directory.
+   * @return \ZipArchive The created zip archive object.
+   */
   private function createZipFile() {
     $tempFileName = tempnam(sys_get_temp_dir(), 'CiviCRM_OnlyOffice_ZipResultFile_');
 
@@ -87,6 +91,11 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     return $zip;
   }
 
+  /**
+   * Saves a string in a new file with unique name in the system temporary directory.
+   * @param $fileString string The string to be written into the file.
+   * @return bool|string The full name/path to the file.
+   */
   private function stringToTempFile($fileString) {
     $tempFileName = tempnam(sys_get_temp_dir(), 'CiviCRM_OnlyOffice_TemplateFile_');
 
@@ -97,6 +106,12 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     return $tempFileName;
   }
 
+  /**
+   * Reads a string from a (temporary) file.
+   * @param $tempFileName string The full name/path to the file.
+   * @param $deleteAfterReadout boolean If true, the file will be deleted after readout.
+   * @return bool|string The content of the file as string.
+   */
   private function tempFileToString($tempFileName, $deleteAfterReadout = false) {
     $handle = fopen($tempFileName, "r");
     $content = fread($handle, filesize($tempFileName));

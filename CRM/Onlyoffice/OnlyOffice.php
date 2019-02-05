@@ -34,6 +34,9 @@ class CRM_Onlyoffice_OnlyOffice {
     return self::$singleton;
   }
 
+  /**
+   * CRM_Onlyoffice_OnlyOffice constructor.
+   */
   function __construct() {
     $settings = CRM_Onlyoffice_Configuration::getSettings();
 
@@ -52,7 +55,7 @@ class CRM_Onlyoffice_OnlyOffice {
 
   /**
    * Get all templates.
-   * @return array  An array of all templates in the form "id => title".
+   * @return array An array of all templates in the form "id => title".
    */
   public function getTemplates() {
     $files = $this->apiHandler->listFiles();
@@ -76,6 +79,11 @@ class CRM_Onlyoffice_OnlyOffice {
     return $fileString;
   }
 
+  /**
+   * Files a template file via token resolving with contact specific content.
+   * @param $tempFileName string The full name/path to the file.
+   * @param $contactId string The unique identifier for a contact in CiviCRM.
+   */
   public function makeReadyFileFromTemplateFile($tempFileName, $contactId) {
     // TODO: Give better name.
 
@@ -115,6 +123,11 @@ class CRM_Onlyoffice_OnlyOffice {
     $zip->close();
   }
 
+  /**
+   * Converts a DocX file to PDF.
+   * @param $inputFileString string The input file as string.
+   * @return false|string The output file as string.
+   */
   public function convertDocxToPdf($inputFileString) {
     $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileString);
 

@@ -23,6 +23,7 @@ class CRM_Onlyoffice_WebsiteHandler {
 
   /**
    * Generates base URL for API usage based on a given server domain.
+   * @param $url string The URL.
    */
   public function setBaseUrl($url) {
     // TODO: Test for empty base URL setting and give out error.
@@ -41,8 +42,8 @@ class CRM_Onlyoffice_WebsiteHandler {
   }
 
   /**
-   * Download a file from the server.
-   * @param string $fileId
+   * Downloads a file from the server.
+   * @param string $fileId The unique identifier for the file to download.
    * @return false|string The downloaded file as string.
    */
   public function downloadFile($fileId) {
@@ -52,6 +53,11 @@ class CRM_Onlyoffice_WebsiteHandler {
     return $fileString;
   }
 
+  /**
+   * Downloads a file from the server as PDF, converts automatically if needed.
+   * @param string $fileId The unique identifier for the PDF file to download.
+   * @return false|string The downloaded PDF file as string.
+   */
   public function downloadFileAsPdf($fileId) {
     $downloadUrl = 'products/files/httphandlers/filehandler.ashx?action=download&outputtype=.pdf&fileid=' . $fileId;
     $fileString = $this->makeGetRequest($downloadUrl);
@@ -61,6 +67,8 @@ class CRM_Onlyoffice_WebsiteHandler {
 
   /**
    * Makes a GET request to the website without custom data.
+   * @param $fileUrl string The URL to the target file.
+   * @return false|string The unchanged response body.
    */
   private function makeGetRequest($fileUrl) {
     $options = array(

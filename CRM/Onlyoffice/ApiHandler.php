@@ -23,6 +23,7 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Generates base URL for API usage based on a given server domain.
+   * @param $url string The URL.
    */
   public function setBaseUrl($url) {
     // TODO: Test for empty base URL setting and give out error.
@@ -34,6 +35,8 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Authenticates on server via username and password to get a token.
+   * @param $name string The user name.
+   * @param $password string The password for the given user name.
    */
   public function authenticate($name, $password) {
     $data = [
@@ -83,6 +86,12 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code.
   }
 
+  /**
+   * Uploads a DocX file to the user space.
+   * @param $fileName string The name of the file including the file extension.
+   * @param $file string The file as string to be uploaded.
+   * @return object The response containing file info.
+   */
   public function uploadDocx($fileName, $file) {
     $result = $this->makePostRequestAsDocx('files/@my/upload', $fileName, $file);
 
@@ -91,6 +100,11 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code.
   }
 
+  /**
+   * Deletes a file from the user space.
+   * @param $fileId string The unique identifier for the file.
+   * @return object The response containing deletion info.
+   */
   public function deleteFile($fileId) {
     $data = [
       'fileId' => $fileId,
@@ -148,6 +162,13 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code?
   }
 
+  /**
+   * Makes a POST request to the API with a DocX file as payload.
+   * @param $method string The target method of the API.
+   * @param $fileName string The name of the file including the file extension.
+   * @param $file string The file as string to be uploaded.
+   * @return object The full decoded response body as string.
+   */
   private function makePostRequestAsDocx($method, $fileName, $file) {
     $header = 'Content-Disposition: inline; filename="' . $fileName . '"' . "\r\n" .
       'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document' . "\r\n" .
@@ -160,6 +181,12 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code?
   }
 
+  /**
+   * Makes a DELETE request to the API with JSON encoded custom data.
+   * @param $method string The target method of the API.
+   * @param $data string The body content for the request.
+   * @return object A JSON decoded object of the returned data.
+   */
   private function makeDeleteRequest($method, $data) {
     $header = "Content-Type: application/json\r\n" .
       "Accept: application/json\r\n";
@@ -200,6 +227,11 @@ class CRM_Onlyoffice_ApiHandler {
     // TODO: Test for returned status code?
   }
 
+  /**
+   * Gets the response header from a GET request to the API.
+   * @param $method string The target method of the API.
+   * @return array The unformatted header.
+   */
   private function getRequestHeader($method) {
     $options = array(
       'http' => array(
