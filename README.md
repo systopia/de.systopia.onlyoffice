@@ -80,4 +80,13 @@ cv en onlyoffice
 ## Known Issues
 
 * You cannot select Civi tokens inside OnlyOffice.
-* It's slow.
+* The OnlyOffice server is only available in HTTP with no encryption.
+* The performance is very low.
+* The community server talks home if not disabled (especially via mail server settings).
+ 
+## Next steps
+
+* Implement HTTPS (via local proxy or wait for the native feature).
+* Rewrite the template/conversion feature as an external service for performance reasons.
+* Implement small comfort features like help/hints for settings.
+* Find a way to reliable disable every connection to the OnlyOffice servers.
