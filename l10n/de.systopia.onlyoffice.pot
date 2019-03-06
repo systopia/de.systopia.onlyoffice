@@ -1,0 +1,60 @@
+# Copyright CiviCRM LLC (c) 2004-2015
+# This file is distributed under the same license as the CiviCRM package.
+# If you contribute heavily to a translation and deem your work copyrightable,
+# make sure you license it to CiviCRM LLC under Academic Free License 3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: de.systopia.onlyoffice\n"
+"POT-Creation-Date: 2019-03-06 15:31+0100\n"
+"Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: CRM/Onlyoffice/Form/Settings.php
+msgid "OnlyOffice URL"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings.php
+msgid "Enter a valid web address beginning with 'http://' or 'https://'."
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings.php
+msgid "OnlyOffice user name"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings.php
+msgid "OnlyOffice user password"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings.php
+msgid "Save"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Task/Generator.php
+msgid "Generate PDFs via OnlyOffice"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Task/Generator.php
+msgid "Template"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Task/Generator.php
+msgid "Generate!"
+msgstr ""
+
+#: onlyoffice.php
+msgid "Create PDFs via OnlyOffice"
+msgstr ""
+
+#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
+msgid ""
+"You can select any of the documents on your OnlyOffice instance as a "
+"template."
+msgstr ""
+
+#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
+msgid ""
+"Visit OnlyOffice by clicking <a target=\"_blank\" href=\"%1\">HERE</a>, and "
+"logging in with user <code>%2</code> and password <code>%3</code>."
+msgstr ""

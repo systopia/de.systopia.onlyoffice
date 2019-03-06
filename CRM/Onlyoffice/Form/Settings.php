@@ -32,7 +32,7 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
       ['class' => 'huge'],
       TRUE
     );
-    $this->addRule('base_url', ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
+    $this->addRule('base_url', E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
 
     $this->add(
       'text',

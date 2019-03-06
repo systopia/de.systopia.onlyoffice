@@ -12,6 +12,10 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
+<div id="help">
+  {ts domain="de.systopia.onlyoffice"}You can select any of the documents on your OnlyOffice instance as a template.{/ts}
+  {ts domain="de.systopia.onlyoffice" 1=$oolink 2=$oouser 3=$oopass}Visit OnlyOffice by clicking <a target="_blank" href="%1">HERE</a>, and logging in with user <code>%2</code> and password <code>%3</code>.{/ts}
+</div>
 
 <div class="crm-section">
   <div class="label">{$form.template_file_id.label}</div>
