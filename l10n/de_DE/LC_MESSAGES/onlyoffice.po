@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.onlyoffice\n"
-"POT-Creation-Date: 2019-03-06 15:31+0100\n"
+"POT-Creation-Date: 2019-03-11 15:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: SYSTOPIA <info@systopia.de>\n"
@@ -38,7 +38,7 @@ msgstr "Speichern"
 
 #: CRM/Onlyoffice/Form/Task/Generator.php
 msgid "Generate PDFs via OnlyOffice"
-msgstr "OnlyOffice PDFs Erstellen"
+msgstr "OnlyOffice PDFs erstellen"
 
 #: CRM/Onlyoffice/Form/Task/Generator.php
 msgid "Template"
@@ -46,11 +46,11 @@ msgstr "Vorlage"
 
 #: CRM/Onlyoffice/Form/Task/Generator.php
 msgid "Generate!"
-msgstr "PDFs Erstellen!"
+msgstr "PDFs erstellen!"
 
 #: onlyoffice.php
 msgid "Create PDFs via OnlyOffice"
-msgstr "PDFs mit OnlyOffice Erstellen"
+msgstr "PDFs mit OnlyOffice erstellen"
 
 #: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
 msgid ""
@@ -60,12 +60,29 @@ msgstr "Sie können alle Dokumente in Ihrem OnlyOffice als Vorlage verwenden."
 
 #: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
 msgid ""
-"Visit OnlyOffice by clicking <a target=\"_blank\" href=\"%1\">HERE</a>, and "
-"logging in with user <code>%2</code> and password <code>%3</code>."
+"You'll find our OnlyOffice instance here:\n"
+"    <ul>\n"
+"      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
+"      <li>User: <code>%2</code></li>\n"
+"      <li>Password: <code>%3</code></li>\n"
+"    </ul>\n"
+"    "
 msgstr ""
-"Gehen Sie <a target=\"_blank\" href=\"%1\">HIER</a> zu Ihrem OnlyOffice und "
-"melden sich dort mit Benutzer <code>%2</code> und Passwort <code>%3</code> "
-"an."
+"Sie finden Ihr OnlyOffice hier:\n"
+"    <ul>\n"
+"      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
+"      <li>Benutzer: <code>%2</code></li>\n"
+"      <li>Passwort: <code>%3</code></li>\n"
+"    </ul>\n"
+"    "
+
+#~ msgid ""
+#~ "Visit OnlyOffice by clicking <a target=\"_blank\" href=\"%1\">HERE</a>, "
+#~ "and logging in with user <code>%2</code> and password <code>%3</code>."
+#~ msgstr ""
+#~ "Gehen Sie <a target=\"_blank\" href=\"%1\">HIER</a> zu Ihrem OnlyOffice "
+#~ "und melden sich dort mit Benutzer <code>%2</code> und Passwort <code>%3</"
+#~ "code> an."
 
 #~ msgid ""
 #~ "Visit OnlyOffice by clicking <a href=\"%1\">HERE</a>, and logging in with "
