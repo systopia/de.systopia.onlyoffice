@@ -65,7 +65,14 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
   }
 
   public function postProcess() {
-    $values = $this->exportValues();
+    $values = $this->exportValues(
+      [
+        'base_url',
+        'user_name',
+        'user_password',
+      ],
+      true
+    );
     CRM_Onlyoffice_Configuration::setSettings($values);
     parent::postProcess();
   }
