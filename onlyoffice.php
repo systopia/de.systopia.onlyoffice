@@ -16,13 +16,17 @@ function onlyoffice_civicrm_searchTasks($objectType, &$tasks) {
   // add DONATION RECEIPT task to contact list
   if ($objectType == 'contact') {
     $tasks[] = array(
-        'title' => E::ts("Create PDFs via OnlyOffice"),
-        'class' => 'CRM_Onlyoffice_Form_Task_Generator',
-        'result' => false);
+      'title' => E::ts("Create PDFs via OnlyOffice"),
+      'class' => 'CRM_Onlyoffice_Form_Task_Generator',
+      'result' => false);
+  }
+  else if ($objectType == 'membership') {
+    $tasks[] = array(
+      'title' => E::ts("Create PDFs via OnlyOffice"),
+      'class' => 'CRM_Onlyoffice_Form_Task_GeneratorForMemberships',
+      'result' => false);
   }
 }
-
-
 
 
 /**
