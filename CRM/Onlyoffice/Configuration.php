@@ -20,37 +20,70 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  *
  * @see https://wiki.civicrm.org/confluence/display/CRMDOC/QuickForm+Reference
  */
-class CRM_Onlyoffice_Configuration {
+class CRM_Onlyoffice_Configuration
+{
+  private const AdminSettingsKey = 'onlyoffice_admin_settings';
+  private const UserSettingsKey = 'onlyoffice_user_settings';
 
-  /**
-   * @param $name string settigs name
-   */
-  public static function getSetting($name)
+  public static function getAdminSetting($name)
   {
-    $settings = self::getSettings();
+    $settings = self::getAdminSettings();
     return CRM_Utils_Array::value($name, $settings, NULL);
   }
 
-  /**
-   * @return array settings
-   */
-  public static function getSettings()
+  public static function getAdminSettings()
   {
-    $settings = CRM_Core_BAO_Setting::getItem('de.systopia.onlyoffice', 'onlyoffice_settings');
-    if ($settings && is_array($settings)) {
+    $settings = Civi::settings()->get(self::AdminSettingsKey);
+    if ($settings && is_array($settings))
+    {
       return $settings;
-    } else {
+    }
+    else
+    {
       return [];
     }
   }
 
-  /**
-   * Stores settings
-   *
-   * @return array settings
-   */
-  public static function setSettings($settings)
+  public static function setAdminSetting($name, $value)
   {
-    CRM_Core_BAO_Setting::setItem($settings, 'de.systopia.onlyoffice', 'onlyoffice_settings');
+    $settings = self::getAdminSettings();
+    $settings[$name] = $value;
+    self::setAdminSettings($settings);
+  }
+
+  public static function setAdminSettings($settings)
+  {
+    Civi::settings()->set(self::AdminSettingsKey, $settings);
+  }
+
+  public static function getUserSetting($name)
+  {
+    $settings = self::getUserSettings();
+    return CRM_Utils_Array::value($name, $settings, NULL);
+  }
+
+  public static function getUserSettings()
+  {
+    $settings = Civi::contactSettings()->get(self::UserSettingsKey);
+    if ($settings && is_array($settings))
+    {
+      return $settings;
+    }
+    else
+    {
+      return [];
+    }
+  }
+
+  public static function setUserSetting($name, $value)
+  {
+    $settings = self::getUserSettings();
+    $settings[$name] = $value;
+    self::setUserSettings($settings);
+  }
+
+  public static function setUserSettings($settings)
+  {
+    Civi::userSettings()->set(self::UserSettingsKey, $settings);
   }
 }
