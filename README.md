@@ -94,3 +94,28 @@ cv en onlyoffice
 * Rewrite the template/conversion feature as an external service for performance reasons.
 * Implement small comfort features like help/hints for settings.
 * Find a way to reliable disable every connection to the OnlyOffice servers.
+
+
+
+
+RAM beschränken:
+docker update --memory=2000m --memory-swap=2200m onlyoffice-community-server
+docker update --memory=1200m --memory-swap=1600m onlyoffice-document-server
+
+
+
+
+Alles in eine PDF?
+Ordner, der per Dropdown ausgewählt werden soll auswählbar machen.
+Eigener CiviCRM-Ordner in OnlyOffice
+Ersetzen des Dropdown durch Suchleiste?
+Metainformationen von Dateien (Erstelldatum etc.).
+Nach Erstellen eine Aktion im Kontakt anlegen.
+Einzelerstellung im Kontakt selbst.
+Link zu OnlyOffice in Civi
+
+Integration OnlyOffice in CiviCRM (iFrame, Einzeldokument oder alles als Menüfeld oben)
+
+[//]: # (<div class="crm-section">)
+[//]: #  (<iframe width="100%" height="640px" src="http://civicrm-demo.systopia.de:8080/products/files/doceditor.aspx?fileid=8&doc=ZTFqc1BGeDZqTlJpMjV1bFdHVFNLSzNFNlJiRTlBNVNUNnZneUZnL0Y0WT0_Ijgi0" frameborder="0" scrolling="no" allowtransparency></iframe>)
+[//]: # (</div>)
