@@ -82,9 +82,10 @@ class CRM_Onlyoffice_OnlyOffice {
   /**
    * Files a template file via token resolving with contact specific content.
    * @param $tempFileName string The full name/path to the file.
-   * @param $contactId string The unique identifier for a contact in CiviCRM.
+   * @param $contexts array An array in the form "contextName => contextData" with different token contexts
+   *                        and their needed data (for example, contact IDs).
    */
-  public function makeReadyFileFromTemplateFile($tempFileName, $contactId) {
+  public function makeReadyFileFromTemplateFile($tempFileName, $contexts, $tokens=[]) {
     // TODO: Give better name.
 
     $zip = new ZipArchive();
@@ -108,7 +109,10 @@ class CRM_Onlyoffice_OnlyOffice {
       $fileList[] = $fileName;
     }
 
-    $processor->addRow()->context('contactId', $contactId);
+    $tokenRow = $processor->addRow();
+
+    $tokenRow->context($contexts);
+    $tokenRow->tokens($tokens);
 
     $processor->evaluate();
 
