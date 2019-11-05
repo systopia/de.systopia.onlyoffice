@@ -11,27 +11,27 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 ## Preparation
 
-* Install docker:  
+* Install docker: \
 `sudo snap install docker`
-* Add your user to the docker groups:  
-`sudo groupadd docker`  
+* Add your user to the docker groups: \
+`sudo groupadd docker` \
 `sudo usermod -aG docker $USER`
 * If needed, log out and login again.
-* Create a network for the two containers:  
+* Create a network for the two containers: \
 `docker network create --driver bridge onlyoffice`
-* Initialise the document server:  
+* Initialise the document server: \
 `docker run --net onlyoffice -d --name onlyoffice-document-server onlyoffice/documentserver`
-* Initialise the community server:  
+* Initialise the community server: \
 `docker run --net onlyoffice -d -p 80:80 -p 443:443 -p 5222:5222 --name onlyoffice-community-server -e DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-document-server onlyoffice/communityserver` ¹
-* If needed, the containers can be stopped/started this way:  
+* If needed, the containers can be stopped/started this way: \
 `docker stop/start <name>`
 * Open localhost in browser.
 * Set password, e-mail address and, if needed, language and time zone, then continue.
 * Go to settings -> DNS settings, activate the option and type in the domain for your server. ² ³
 * Create new users via "Invite users to portal" and follow the instructions on the created invitation link.
 
-¹ If you want to adjust the port routing, after the -p parameter the first number is the outer port, then comes the inner one.  
-² You need a domain or an IP of your server/computer that runs the docker containers which both of these containers and all user can reach. At best, this is a valid domain or static global IP, you can use the local IP in your network for testing, using localhost or 127.0.0.1 does not work.  
+¹ If you want to adjust the port routing, after the -p parameter the first number is the outer port, then comes the inner one. \
+² You need a domain or an IP of your server/computer that runs the docker containers which both of these containers and all users can reach. At best, this is a valid domain or static global IP, you can use the local IP in your network for testing, using localhost or 127.0.0.1 does not work. \
 ³ If you used another port for routing, remember to set it here, too, for example: "example.org:8080".
 
 ## Installation (Web UI)
@@ -87,7 +87,7 @@ cv en onlyoffice
 * The OnlyOffice server is only available in HTTP with no encryption.
 * The performance is very low.
 * The community server talks home if not disabled (especially via mail server settings).
- 
+
 ## Next steps
 
 * Implement HTTPS (via local proxy or wait for the native feature).
