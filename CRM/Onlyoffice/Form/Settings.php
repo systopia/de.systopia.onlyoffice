@@ -24,7 +24,6 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
 
   public function buildQuickForm() {
 
-    // add form elements
     $this->add(
       'text',
       'base_url',
