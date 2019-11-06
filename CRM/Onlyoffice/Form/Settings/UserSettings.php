@@ -38,7 +38,7 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
       TRUE
     );
 
-    $settings = CRM_Onlyoffice_Configuration::getUserSettings();
+    $settings = CRM_Onlyoffice_Configuration::getUserSetting('user_name');
     $this->setDefaults($settings);
 
     $this->addButtons(array(
