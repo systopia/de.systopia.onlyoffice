@@ -84,6 +84,6 @@ class CRM_Onlyoffice_Configuration
 
   public static function setUserSettings($settings)
   {
-    Civi::userSettings()->set(self::UserSettingsKey, $settings);
+    Civi::contactSettings()->set(self::UserSettingsKey, $settings);
   }
 }
