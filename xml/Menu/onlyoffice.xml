@@ -1,9 +1,17 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/admin/onlyoffice</path>
-    <page_callback>CRM_Onlyoffice_Form_Settings</page_callback>
-    <title>OnlyOffice Configuration</title>
+    <path>civicrm/onlyoffice/settings/admin</path>
+    <page_callback>CRM_Onlyoffice_Form_Settings_AdminSettings</page_callback>
+    <title>OnlyOffice Admin Settings</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+    <adminGroup>Communications</adminGroup>
+    <icon>admin/small/rela_type.png</icon>
+  </item>
+  <item>
+    <path>civicrm/onlyoffice/settings/user</path>
+    <page_callback>CRM_Onlyoffice_Form_Settings_UserSettings</page_callback>
+    <title>OnlyOffice User Settings</title>
     <access_arguments>administer CiviCRM</access_arguments>
     <adminGroup>Communications</adminGroup>
     <icon>admin/small/rela_type.png</icon>

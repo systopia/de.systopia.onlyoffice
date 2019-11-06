@@ -14,11 +14,6 @@
 
 
 <div class="crm-section">
-  <div class="label">{$form.base_url.label}</div>
-  <div class="content">{$form.base_url.html}</div>
-  <div class="clear"></div>
-</div>
-<div class="crm-section">
   <div class="label">{$form.user_name.label}</div>
   <div class="content">{$form.user_name.html}</div>
   <div class="clear"></div>

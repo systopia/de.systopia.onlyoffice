@@ -16,11 +16,9 @@
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 /**
- * Form controller class
- *
- * @see https://wiki.civicrm.org/confluence/display/CRMDOC/QuickForm+Reference
+ * Page for admin users to set general configurations and connect users with Onlyoffice.
  */
-class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
+class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
 
   public function buildQuickForm() {
 
@@ -33,23 +31,9 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
     );
     $this->addRule('base_url', E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
 
-    $this->add(
-      'text',
-      'user_name',
-      E::ts("OnlyOffice user name"),
-      ['class' => 'huge'],
-      TRUE
-    );
+    // TODO: Connect users with Onlyoffice.
 
-    $this->add(
-      'password',
-      'user_password',
-      E::ts("OnlyOffice user password"),
-      ['class' => 'huge'],
-      TRUE
-    );
-
-    $settings = CRM_Onlyoffice_Configuration::getSettings();
+    $settings = CRM_Onlyoffice_Configuration::getAdminSettings();
     $this->setDefaults($settings);
 
     $this->addButtons(array(
@@ -67,8 +51,6 @@ class CRM_Onlyoffice_Form_Settings extends CRM_Core_Form {
     $values = $this->exportValues(
       [
         'base_url',
-        'user_name',
-        'user_password',
       ],
       true
     );
