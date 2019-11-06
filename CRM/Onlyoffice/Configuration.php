@@ -56,15 +56,15 @@ class CRM_Onlyoffice_Configuration
     Civi::settings()->set(self::AdminSettingsKey, $settings);
   }
 
-  public static function getUserSetting($name)
+  public static function getUserSetting($name, $contactID = null)
   {
-    $settings = self::getUserSettings();
-    return CRM_Utils_Array::value($name, $settings, NULL);
+    $settings = self::getUserSettings($contactID);
+    return CRM_Utils_Array::value($name, $settings, null);
   }
 
-  public static function getUserSettings()
+  public static function getUserSettings($contactID = null)
   {
-    $settings = Civi::contactSettings()->get(self::UserSettingsKey);
+    $settings = Civi::contactSettings($contactID)->get(self::UserSettingsKey);
     if ($settings && is_array($settings))
     {
       return $settings;
@@ -75,15 +75,15 @@ class CRM_Onlyoffice_Configuration
     }
   }
 
-  public static function setUserSetting($name, $value)
+  public static function setUserSetting($name, $value, $contactID = null)
   {
-    $settings = self::getUserSettings();
+    $settings = self::getUserSettings($contactID);
     $settings[$name] = $value;
     self::setUserSettings($settings);
   }
 
-  public static function setUserSettings($settings)
+  public static function setUserSettings($settings, $contactID = null)
   {
-    Civi::contactSettings()->set(self::UserSettingsKey, $settings);
+    Civi::contactSettings($contactID)->set(self::UserSettingsKey, $settings);
   }
 }
