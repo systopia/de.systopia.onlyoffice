@@ -38,11 +38,11 @@ class CRM_Onlyoffice_OnlyOffice {
    * CRM_Onlyoffice_OnlyOffice constructor.
    */
   function __construct() {
-    $settings = CRM_Onlyoffice_Configuration::getSettings();
+    $userSettings = CRM_Onlyoffice_Configuration::getUserSettings();
 
-    $baseUrl = $settings['base_url'];
-    $userName = $settings['user_name'];
-    $userPassword = $settings['user_password'];
+    $userName = $userSettings['user_name'];
+    $userPassword = $userSettings['user_password'];
+    $baseUrl = CRM_Onlyoffice_Configuration::getAdminSetting('base_url');
 
     $this->apiHandler = new CRM_Onlyoffice_ApiHandler();
     $this->apiHandler->setBaseUrl($baseUrl);

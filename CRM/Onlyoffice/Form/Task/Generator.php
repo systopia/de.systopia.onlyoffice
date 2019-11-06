@@ -42,9 +42,9 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
     ));
 
     // pass login information
-    $this->assign('oopass', CRM_Onlyoffice_Configuration::getSetting('user_password'));
-    $this->assign('oouser', CRM_Onlyoffice_Configuration::getSetting('user_name'));
-    $this->assign('oolink', CRM_Onlyoffice_Configuration::getSetting('base_url'));
+    $this->assign('oopass', CRM_Onlyoffice_Configuration::getUserSetting('user_password'));
+    $this->assign('oouser', CRM_Onlyoffice_Configuration::getUserSetting('user_name'));
+    $this->assign('oolink', CRM_Onlyoffice_Configuration::getAdminSetting('base_url'));
   }
 
   /**
