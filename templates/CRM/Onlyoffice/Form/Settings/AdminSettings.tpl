@@ -18,6 +18,11 @@
   <div class="content">{$form.base_url.html}</div>
   <div class="clear"></div>
 </div>
+<div class="crm-section">
+  <div class="label">{$form.user_can_connect_themselves.label}</div>
+  <div class="content">{$form.user_can_connect_themselves.html}</div>
+  <div class="clear"></div>
+</div>
 
 
 {* FOOTER *}

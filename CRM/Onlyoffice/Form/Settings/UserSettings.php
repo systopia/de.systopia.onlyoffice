@@ -20,50 +20,65 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form
 {
+  // TODO: We must make this settings page accessible.
+  //       If we put the link to this page it under Administration it will be the only link there for non-admins.
+  //       We will have to check how page URLs and user permissions work.
+
+  protected const UsersCanConnectThemselvesSmartyVariableName = 'usersCanConnectThemselves';
 
   public function buildQuickForm()
   {
-    $this->add(
-      'text',
-      CRM_Onlyoffice_Configuration::UserNameKey,
-      E::ts('Onlyoffice user name'),
-      ['class' => 'huge'],
-      TRUE
-    );
+    $usersCanConnectThemselves = CRM_Onlyoffice_Configuration::getAdminSetting(CRM_Onlyoffice_Configuration::UsersCanConnectThemselvesKey);
 
-    $this->add(
-      'password',
-      CRM_Onlyoffice_Configuration::UserPasswordKey,
-      E::ts('Onlyoffice user password'),
-      ['class' => 'huge'],
-      TRUE
-    );
+    $this->assign(self::UsersCanConnectThemselvesSmartyVariableName, $usersCanConnectThemselves);
 
-    $settings = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserNameKey);
-    $this->setDefaults($settings);
+    if ($usersCanConnectThemselves)
+    {
+      $this->add(
+        'text',
+        CRM_Onlyoffice_Configuration::UserNameKey,
+        E::ts('Onlyoffice user name'),
+        ['class' => 'huge'],
+        TRUE
+      );
 
-    $this->addButtons(array(
-      array(
-        'type' => 'submit',
-        'name' => E::ts('Save'),
-        'isDefault' => TRUE,
-      ),
-    ));
+      $this->add(
+        'password',
+        CRM_Onlyoffice_Configuration::UserPasswordKey,
+        E::ts('Onlyoffice user password'),
+        ['class' => 'huge'],
+        TRUE
+      );
+
+      $settings = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserNameKey);
+      $this->setDefaults($settings);
+
+      $this->addButtons(array(
+        array(
+          'type' => 'submit',
+          'name' => E::ts('Save'),
+          'isDefault' => TRUE,
+        ),
+      ));
+    }
 
     parent::buildQuickForm();
   }
 
   public function postProcess()
   {
-    $values = $this->exportValues(
-      [
-        CRM_Onlyoffice_Configuration::UserNameKey,
-        CRM_Onlyoffice_Configuration::UserPasswordKey,
-      ],
-      true
-    );
+    if (CRM_Onlyoffice_Configuration::getAdminSetting(CRM_Onlyoffice_Configuration::UsersCanConnectThemselvesKey))
+    {
+      $values = $this->exportValues(
+        [
+          CRM_Onlyoffice_Configuration::UserNameKey,
+          CRM_Onlyoffice_Configuration::UserPasswordKey,
+        ],
+        true
+      );
 
-    CRM_Onlyoffice_Configuration::setUserSettings($values);
+      CRM_Onlyoffice_Configuration::setUserSettings($values);
+    }
 
     parent::postProcess();
   }

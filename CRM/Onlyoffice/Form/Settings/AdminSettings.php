@@ -35,6 +35,12 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form
       'url'
     );
 
+    $this->add(
+      'checkbox',
+      CRM_Onlyoffice_Configuration::UsersCanConnectThemselvesKey,
+      E::ts('Users are allowed to connect themselves with Onlyoffice.')
+    );
+
     // TODO: Connect users with Onlyoffice.
 
     $settings = CRM_Onlyoffice_Configuration::getAdminSettings();
@@ -56,10 +62,11 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form
     $values = $this->exportValues(
       [
         CRM_Onlyoffice_Configuration::BaseUrlKey,
+        CRM_Onlyoffice_Configuration::UsersCanConnectThemselvesKey,
       ],
       true
     );
-    CRM_Onlyoffice_Configuration::setSettings($values);
+    CRM_Onlyoffice_Configuration::setAdminSettings($values);
     parent::postProcess();
   }
 }

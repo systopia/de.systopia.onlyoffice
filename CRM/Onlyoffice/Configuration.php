@@ -26,6 +26,7 @@ class CRM_Onlyoffice_Configuration
   private const UserSettingsKey = 'onlyoffice_user_settings';
 
   public const BaseUrlKey = 'base_url';
+  public const UsersCanConnectThemselvesKey = 'user_can_connect_themselves';
   public const UserNameKey = 'user_name';
   public const UserPasswordKey = 'user_password';
 
