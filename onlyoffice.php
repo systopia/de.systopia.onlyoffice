@@ -4,21 +4,18 @@ require_once 'onlyoffice.civix.php';
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 
-/**
- * Add an action for creating donation receipts after doing a search
- *
- * @param string $objectType specifies the component
- * @param array $tasks the list of actions
- *
- * @access public
- */
-function onlyoffice_civicrm_searchTasks($objectType, &$tasks) {
-  // add DONATION RECEIPT task to contact list
-  if ($objectType == 'contact') {
-    $tasks[] = array(
-        'title' => E::ts("Create PDFs via OnlyOffice"),
-        'class' => 'CRM_Onlyoffice_Form_Task_Generator',
-        'result' => false);
+function onlyoffice_civicrm_searchTasks($objectType, &$tasks)
+{
+  // add "Create PDFs via OnlyOffice" task to contact list
+  if ($objectType == 'contact')
+  {
+    $tasks[] = [
+      'title' => E::ts('Create PDFs via OnlyOffice'),
+      'class' => 'CRM_Onlyoffice_Form_Task_Generator',
+      'result' => false
+    ];
+  }
+}
 
 function onlyoffice_civicrm_summaryActions(&$actions, $contactID)
 {
