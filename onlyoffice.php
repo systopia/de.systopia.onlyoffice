@@ -19,6 +19,20 @@ function onlyoffice_civicrm_searchTasks($objectType, &$tasks) {
         'title' => E::ts("Create PDFs via OnlyOffice"),
         'class' => 'CRM_Onlyoffice_Form_Task_Generator',
         'result' => false);
+
+function onlyoffice_civicrm_summaryActions(&$actions, $contactID)
+{
+  // add "Connect user with Onlyoffice account" action
+  if (CRM_Core_Permission::check('administer CiviCRM'))
+  {
+    $actions['onlyoffice_connect_user_account'] = [
+      'title'           => E::ts('Connect user with Onlyoffice account'),
+      'weight'          => 2409,
+      'ref'             => 'connect_user_with_onlyoffice',
+      'key'             => 'onlyoffice_connect_user_account',
+      'href'            => CRM_Utils_System::url('civicrm/onlyoffice/settings/admin', "reset=1&cid={$contactID}"),
+      'permissions'     => ['administer CiviCRM']
+    ];
   }
 }
 
