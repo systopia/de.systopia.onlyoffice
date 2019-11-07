@@ -18,14 +18,15 @@ use CRM_Onlyoffice_ExtensionUtil as E;
 /**
  * Page for normal users to connect their account with Onlyoffice.
  */
-class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
+class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form
+{
 
-  public function buildQuickForm() {
-
+  public function buildQuickForm()
+  {
     $this->add(
       'text',
       CRM_Onlyoffice_Configuration::UserNameKey,
-      E::ts("OnlyOffice user name"),
+      E::ts('Onlyoffice user name'),
       ['class' => 'huge'],
       TRUE
     );
@@ -33,7 +34,7 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
     $this->add(
       'password',
       CRM_Onlyoffice_Configuration::UserPasswordKey,
-      E::ts("OnlyOffice user password"),
+      E::ts('Onlyoffice user password'),
       ['class' => 'huge'],
       TRUE
     );
@@ -52,7 +53,8 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
     parent::buildQuickForm();
   }
 
-  public function postProcess() {
+  public function postProcess()
+  {
     $values = $this->exportValues(
       [
         CRM_Onlyoffice_Configuration::UserNameKey,
@@ -60,8 +62,9 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
       ],
       true
     );
+
     CRM_Onlyoffice_Configuration::setUserSettings($values);
+
     parent::postProcess();
   }
-
 }

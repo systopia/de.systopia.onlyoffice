@@ -18,14 +18,14 @@ use CRM_Onlyoffice_ExtensionUtil as E;
 /**
  * Page for admin users to set general configurations and connect users with Onlyoffice.
  */
-class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
-
-  public function buildQuickForm() {
-
+class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form
+{
+  public function buildQuickForm()
+  {
     $this->add(
       'text',
       CRM_Onlyoffice_Configuration::BaseUrlKey,
-      E::ts("OnlyOffice URL"),
+      E::ts('Onlyoffice URL'),
       ['class' => 'huge'],
       TRUE
     );
@@ -51,7 +51,8 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
     parent::buildQuickForm();
   }
 
-  public function postProcess() {
+  public function postProcess()
+  {
     $values = $this->exportValues(
       [
         CRM_Onlyoffice_Configuration::BaseUrlKey,
@@ -61,5 +62,4 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
     CRM_Onlyoffice_Configuration::setSettings($values);
     parent::postProcess();
   }
-
 }
