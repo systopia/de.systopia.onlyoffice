@@ -24,7 +24,7 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
 
     $this->add(
       'text',
-      'user_name',
+      CRM_Onlyoffice_Configuration::UserNameKey,
       E::ts("OnlyOffice user name"),
       ['class' => 'huge'],
       TRUE
@@ -32,13 +32,13 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
 
     $this->add(
       'password',
-      'user_password',
+      CRM_Onlyoffice_Configuration::UserPasswordKey,
       E::ts("OnlyOffice user password"),
       ['class' => 'huge'],
       TRUE
     );
 
-    $settings = CRM_Onlyoffice_Configuration::getUserSetting('user_name');
+    $settings = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserNameKey);
     $this->setDefaults($settings);
 
     $this->addButtons(array(
@@ -55,8 +55,8 @@ class CRM_Onlyoffice_Form_Settings_UserSettings extends CRM_Core_Form {
   public function postProcess() {
     $values = $this->exportValues(
       [
-        'user_name',
-        'user_password',
+        CRM_Onlyoffice_Configuration::UserNameKey,
+        CRM_Onlyoffice_Configuration::UserPasswordKey,
       ],
       true
     );

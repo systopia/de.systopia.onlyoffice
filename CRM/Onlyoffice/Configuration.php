@@ -25,6 +25,10 @@ class CRM_Onlyoffice_Configuration
   private const AdminSettingsKey = 'onlyoffice_admin_settings';
   private const UserSettingsKey = 'onlyoffice_user_settings';
 
+  public const BaseUrlKey = 'base_url';
+  public const UserNameKey = 'user_name';
+  public const UserPasswordKey = 'user_password';
+
   public static function getAdminSetting($name)
   {
     $settings = self::getAdminSettings();

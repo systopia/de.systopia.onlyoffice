@@ -24,12 +24,16 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
 
     $this->add(
       'text',
-      'base_url',
+      CRM_Onlyoffice_Configuration::BaseUrlKey,
       E::ts("OnlyOffice URL"),
       ['class' => 'huge'],
       TRUE
     );
-    $this->addRule('base_url', E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
+    $this->addRule(
+      CRM_Onlyoffice_Configuration::BaseUrlKey,
+      E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'),
+      'url'
+    );
 
     // TODO: Connect users with Onlyoffice.
 
@@ -50,7 +54,7 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form {
   public function postProcess() {
     $values = $this->exportValues(
       [
-        'base_url',
+        CRM_Onlyoffice_Configuration::BaseUrlKey,
       ],
       true
     );
