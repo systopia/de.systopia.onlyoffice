@@ -41,8 +41,6 @@ class CRM_Onlyoffice_Form_Settings_AdminSettings extends CRM_Core_Form
       E::ts('Users are allowed to connect themselves with Onlyoffice.')
     );
 
-    // TODO: Connect users with Onlyoffice.
-
     $settings = CRM_Onlyoffice_Configuration::getAdminSettings();
     $this->setDefaults($settings);
 

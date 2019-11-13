@@ -12,7 +12,14 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
-{if $usersCanConnectThemselves}
+{if $usersCanConnectThemselves || $userIsAdmin}
+  {if $userIsAdmin}
+    <div class="crm-section">
+      <div class="label">{$form.user_reference.label}</div>
+      <div class="content">{$form.user_reference.html}</div>
+      <div class="clear"></div>
+    </div>
+  {/if}
   <div class="crm-section">
     <div class="label">{$form.user_name.label}</div>
     <div class="content">{$form.user_name.html}</div>
