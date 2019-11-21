@@ -22,13 +22,17 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Configuration
 {
+  // Internal setting groups keys:
   private const AdminSettingsKey = 'onlyoffice_admin_settings';
   private const UserSettingsKey = 'onlyoffice_user_settings';
-
+  // Global settings keys:
   public const BaseUrlKey = 'base_url';
   public const UsersCanConnectThemselvesKey = 'user_can_connect_themselves';
-  public const UserNameKey = 'user_name';
-  public const UserPasswordKey = 'user_password';
+  public const UserConnectionsKey = 'user_connections';
+  // Global element constants:
+  // Global Page/Form paths:
+  public const ConnectUserSelectionPagePath = 'civicrm/onlyoffice/settings/connectuser/selection';
+  public const ConnectUserConnectionPagePath = 'civicrm/onlyoffice/settings/connectuser/connection';
 
   public static function getAdminSetting($name)
   {

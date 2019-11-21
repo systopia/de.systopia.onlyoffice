@@ -12,30 +12,11 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
-{if $usersCanConnectThemselves || $userIsAdmin}
-  {if $userIsAdmin}
-    <div class="crm-section">
-      <div class="label">{$form.user_reference.label}</div>
-      <div class="content">{$form.user_reference.html}</div>
-      <div class="clear"></div>
-    </div>
-  {/if}
-  <div class="crm-section">
-    <div class="label">{$form.user_name.label}</div>
-    <div class="content">{$form.user_name.html}</div>
-    <div class="clear"></div>
-  </div>
-  <div class="crm-section">
-    <div class="label">{$form.user_password.label}</div>
-    <div class="content">{$form.user_password.html}</div>
-    <div class="clear"></div>
-  </div>
-{else}
-  <div>
-    {ts}The administrator disabled the ability for users to connect their accounts with Onlyoffice. Please contact your administrator.{/ts}
-    <br><br>
-  </div>
-{/if}
+<div class="crm-section">
+  <div class="label">{$form.user_reference.label}</div>
+  <div class="content">{$form.user_reference.html}</div>
+  <div class="clear"></div>
+</div>
 
 
 {* FOOTER *}

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <menu>
+  <!-- Admin settings -->
   <item>
     <path>civicrm/onlyoffice/settings/admin</path>
     <page_callback>CRM_Onlyoffice_Form_Settings_AdminSettings</page_callback>
@@ -8,10 +9,20 @@
     <adminGroup>Communications</adminGroup>
     <icon>admin/small/rela_type.png</icon>
   </item>
+  <!-- Connect user, user selection for admins -->
   <item>
-    <path>civicrm/onlyoffice/settings/user</path>
-    <page_callback>CRM_Onlyoffice_Form_Settings_UserSettings</page_callback>
-    <title>OnlyOffice User Settings</title>
+    <path>civicrm/onlyoffice/settings/connectuser/selection</path>
+    <page_callback>CRM_Onlyoffice_Form_Settings_ConnectUser_Selection</page_callback>
+    <title>OnlyOffice Connect Any User</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+    <adminGroup>Communications</adminGroup>
+    <icon>admin/small/rela_type.png</icon>
+  </item>
+  <!-- Connect user, actual connection for both users and admins -->
+  <item>
+    <path>civicrm/onlyoffice/settings/connectuser/connection</path>
+    <page_callback>CRM_Onlyoffice_Form_Settings_ConnectUser_Connection</page_callback>
+    <title>OnlyOffice Connect Current User</title>
     <access_arguments>administer CiviCRM</access_arguments>
     <adminGroup>Communications</adminGroup>
     <icon>admin/small/rela_type.png</icon>
