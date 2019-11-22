@@ -30,22 +30,36 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
   protected const NumberOfConnectionElementsVariableName = 'numberOfConnectionElements';
   protected const ShowConnectionElementsVariableName = 'showConnectionElements';
 
+  protected const ContactIdElementName = 'contact_id';
   protected const UserNameElementName = 'user_name';
   protected const UserPasswordElementName = 'user_password';
 
   protected function getContactIdIfAllowed ()
   {
-    $contactId = $_REQUEST['cid'];
+    $contactId = null;
 
-    if ($contactId && !CRM_Core_Permission::check('admin')) // TODO: Should we define an "Onlyoffice admin" role? What about an "Onlyoffice user" role?
+    $values = $this->exportValues([self::ContactIdElementName], true);
+
+    if (array_key_exists(self::ContactIdElementName, $values) && !empty($values[self::ContactIdElementName]))
+    {
+      $contactId = $values[self::ContactIdElementName];
+    }
+    else if (array_key_exists('cid', $_REQUEST))
+    {
+      $contactId = $_REQUEST['cid'];
+    }
+
+    if (!CRM_Core_Permission::check('admin')) // TODO: Should we define an "Onlyoffice admin" role? What about an "Onlyoffice user" role?
     {
       // If there is a contact ID set but we are no admin, we are not allowed to do that.
       // In this case, ignore the contact ID and use the current user insetad.
       $contactId = null;
     }
+
+    return $contactId;
   }
 
-  protected function buildConnectElements (&$defaults, $userIsAdmin)
+  protected function buildConnectElements (&$defaults)
   {
     $contactId = $this->getContactIdIfAllowed();
     $connections = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey, $contactId);
@@ -58,6 +72,11 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
     $connectionList = [];
     foreach ($connections as $connectionName => $connectionPassword)
     {
+      if (empty($connectionName) || empty($connectionPassword))
+      {
+        continue;
+      }
+
       $connectionList[] = [
         'name' => $connectionName,
         'password' => $connectionPassword,
@@ -90,15 +109,8 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
       {
         $defaults[$userNameKey] = $connectionList[$i]['name'];
 
-        if ($userIsAdmin)
-        {
-          // Only the admin is allowed to see the password because otherwise the user could see passwords set by the admin.
-          $defaults[$userPasswordKey] = $connectionList[$i]['password'];
-        }
-        else
-        {
-          $defaults[$userPasswordKey] = self::HiddenPasswordPlaceholder;
-        }
+        // Passwords shall not be shown to any user or admin:
+        $defaults[$userPasswordKey] = self::HiddenPasswordPlaceholder;
       }
     }
 
@@ -116,13 +128,20 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
 
     $this->assign(self::ShowConnectionElementsVariableName, $showConnectionElements);
 
+    $defaults = [];
+
+    // Hidden element for the contact ID because if given as GET parameter it will be lost in process():
+    $this->add(
+      'hidden',
+      self::ContactIdElementName
+    );
+
+    $contactId = $this->getContactIdIfAllowed();
+    $defaults[self::ContactIdElementName] = $contactId;
+
     if ($showConnectionElements)
     {
-      $defaults = [];
-
-      $this->buildConnectElements($defaults, $userIsAdmin);
-
-      $this->setDefaults($defaults);
+      $this->buildConnectElements($defaults);
 
       $this->addButtons(
         [
@@ -146,6 +165,8 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
         ]
       );
     }
+
+    $this->setDefaults($defaults);
   }
 
   public function postProcess ()
@@ -163,7 +184,7 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
       $nameElementName = self::UserNameElementName . '_' . $i;
       $passwordElementName = self::UserPasswordElementName . '_' . $i;
 
-      if (in_array($nameElementName, $values) && in_array($passwordElementName, $values))
+      if (array_key_exists($nameElementName, $values) && array_key_exists($passwordElementName, $values))
       {
         $name = $values[$nameElementName];
         $password = $values[$passwordElementName];
@@ -171,7 +192,7 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
         // If the password is a placeholder, replace it with the old password for this connection:
         if ($password == self::HiddenPasswordPlaceholder)
         {
-          if (in_array($name, $oldConnections))
+          if (array_key_exists($name, $oldConnections))
           {
             $password = $oldConnections[$name];
           }
@@ -189,9 +210,9 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
 
     CRM_Onlyoffice_Configuration::setUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey, $connections, $contactId);
 
-    if (CRM_Core_Permission::check('admin'))
+    // Redirect admins back to the user selection page if they changed the connections of another user:
+    if (CRM_Core_Permission::check('admin') && $contactId)
     {
-      // Redirect admins back to the user selection page:
       $selectionUrl = CRM_Utils_System::url(CRM_Onlyoffice_Configuration::ConnectUserSelectionPagePath);
       CRM_Utils_System::redirect($selectionUrl);
     }
