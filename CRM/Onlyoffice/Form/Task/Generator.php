@@ -41,10 +41,14 @@ class CRM_Onlyoffice_Form_Task_Generator extends CRM_Contact_Form_Task {
         ),
     ));
 
+    $connections = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey);
+    $userName = array_keys($connections)[0]; // FIXME: This should be selectable by the user not hardcoded the first connection found!
+    $userPassword = $connections[$userName];
+
     // pass login information
-    $this->assign('oopass', CRM_Onlyoffice_Configuration::getUserSetting('user_password'));
-    $this->assign('oouser', CRM_Onlyoffice_Configuration::getUserSetting('user_name'));
     $this->assign('oolink', CRM_Onlyoffice_Configuration::getAdminSetting('base_url'));
+    $this->assign('oouser', $userName);
+    $this->assign('oopass', $userPassword);
   }
 
   /**
