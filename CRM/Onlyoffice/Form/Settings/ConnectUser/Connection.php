@@ -189,6 +189,12 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
         $name = $values[$nameElementName];
         $password = $values[$passwordElementName];
 
+        // Do not save empty values:
+        if (empty($name))
+        {
+          continue;
+        }
+
         // If the password is a placeholder, replace it with the old password for this connection:
         if ($password == self::HiddenPasswordPlaceholder)
         {
