@@ -52,7 +52,7 @@ class CRM_Onlyoffice_Form_Settings_ConnectUser_Connection extends CRM_Core_Form
     if (!CRM_Core_Permission::check('admin')) // TODO: Should we define an "Onlyoffice admin" role? What about an "Onlyoffice user" role?
     {
       // If there is a contact ID set but we are no admin, we are not allowed to do that.
-      // In this case, ignore the contact ID and use the current user insetad.
+      // In this case, ignore the contact ID and use the current user instead.
       $contactId = null;
     }
 

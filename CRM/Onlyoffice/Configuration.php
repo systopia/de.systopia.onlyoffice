@@ -34,13 +34,13 @@ class CRM_Onlyoffice_Configuration
   public const ConnectUserSelectionPagePath = 'civicrm/onlyoffice/settings/connectuser/selection';
   public const ConnectUserConnectionPagePath = 'civicrm/onlyoffice/settings/connectuser/connection';
 
-  public static function getAdminSetting($name)
+  public static function getAdminSetting(string $name)
   {
     $settings = self::getAdminSettings();
     return CRM_Utils_Array::value($name, $settings, NULL);
   }
 
-  public static function getAdminSettings()
+  public static function getAdminSettings(): array
   {
     $settings = Civi::settings()->get(self::AdminSettingsKey);
     if ($settings && is_array($settings))
@@ -53,25 +53,25 @@ class CRM_Onlyoffice_Configuration
     }
   }
 
-  public static function setAdminSetting($name, $value)
+  public static function setAdminSetting(string $name, $value): void
   {
     $settings = self::getAdminSettings();
     $settings[$name] = $value;
     self::setAdminSettings($settings);
   }
 
-  public static function setAdminSettings($settings)
+  public static function setAdminSettings(array $settings): void
   {
     Civi::settings()->set(self::AdminSettingsKey, $settings);
   }
 
-  public static function getUserSetting($name, $contactID = null)
+  public static function getUserSetting(string $name, ?int $contactID = null)
   {
     $settings = self::getUserSettings($contactID);
     return CRM_Utils_Array::value($name, $settings, null);
   }
 
-  public static function getUserSettings($contactID = null)
+  public static function getUserSettings(?int $contactID = null): array
   {
     $settings = Civi::contactSettings($contactID)->get(self::UserSettingsKey);
     if ($settings && is_array($settings))
@@ -84,14 +84,14 @@ class CRM_Onlyoffice_Configuration
     }
   }
 
-  public static function setUserSetting($name, $value, $contactID = null)
+  public static function setUserSetting(string $name, $value, ?int $contactID = null): void
   {
     $settings = self::getUserSettings($contactID);
     $settings[$name] = $value;
     self::setUserSettings($settings);
   }
 
-  public static function setUserSettings($settings, $contactID = null)
+  public static function setUserSettings(array $settings, ?int $contactID = null): void
   {
     Civi::contactSettings($contactID)->set(self::UserSettingsKey, $settings);
   }

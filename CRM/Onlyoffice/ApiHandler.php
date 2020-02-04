@@ -47,7 +47,7 @@ class CRM_Onlyoffice_ApiHandler {
     $this->token = $result->response->token;
 
     // TODO: Test for returned status code.
-    // TODO: Save token in settings and only renew it when necessary (see response->expires).
+    // TODO: Save token in settings and only renew it when necessary (see response->expires) or not working.
   }
 
   /**
@@ -66,7 +66,7 @@ class CRM_Onlyoffice_ApiHandler {
     $cookies = [];
     foreach ($rawCookies as $rawCookie) {
       $bakedCookie = explode('; ', $rawCookie);
-      $cookies[] = $bakedCookie[0]; //Actually cookie is the first entry.
+      $cookies[] = $bakedCookie[0]; //Actual cookie is the first entry.
     }
 
     $sessionCookies = implode('; ', $cookies);
