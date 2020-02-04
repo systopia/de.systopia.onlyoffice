@@ -18,27 +18,37 @@ use CRM_Onlyoffice_ExtensionUtil as E;
 /**
  * General handling class
  */
-class CRM_Onlyoffice_OnlyOffice {
+final class CRM_Onlyoffice_OnlyOffice
+{
+  private static $singleton = null;
 
-  private static $singleton = NULL;
-  private $apiHandler = NULL;
-  private $websiteHandler = NULL;
+  /**
+   * @var CRM_Onlyoffice_ApiHandler $apiHandler
+   */
+  private $apiHandler = null;
+  /**
+   * @var CRM_Onlyoffice_WebsiteHandler $websiteHandler
+   */
+  private $websiteHandler = null;
 
   /**
   * Get the Onlyoffice controller singleton
   */
-  public static function getSingleton() {
-    if (self::$singleton === NULL) {
+  public static function getSingleton(): CRM_Onlyoffice_OnlyOffice
+  {
+    if (self::$singleton === null)
+    {
       self::$singleton = new CRM_Onlyoffice_OnlyOffice();
     }
+
     return self::$singleton;
   }
 
   /**
    * CRM_Onlyoffice_OnlyOffice constructor.
    */
-  function __construct() {
-
+  function __construct()
+  {
     $connections = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey);
     $userName = array_keys($connections)[0]; // FIXME: This should be selectable by the user not hardcoded the first connection found!
     $userPassword = $connections[$userName];
@@ -58,11 +68,13 @@ class CRM_Onlyoffice_OnlyOffice {
    * Get all templates.
    * @return array An array of all templates in the form "id => title".
    */
-  public function getTemplates() {
+  public function getTemplates()
+  {
     $files = $this->apiHandler->listFiles();
 
     $templates = [];
-    foreach ($files as $file) {
+    foreach ($files as $file)
+    {
       $templates[$file->id] = $file->title;
     }
 
@@ -74,7 +86,8 @@ class CRM_Onlyoffice_OnlyOffice {
    * @param $fileId string The id of the file to download.
    * @return false|string The downloaded file as string.
    */
-  public function downloadTemplateFile($fileId) {
+  public function downloadTemplateFile($fileId)
+  {
     $fileString = $this->websiteHandler->downloadFile($fileId);
 
     return $fileString;
@@ -85,7 +98,8 @@ class CRM_Onlyoffice_OnlyOffice {
    * @param $tempFileName string The full name/path to the file.
    * @param $contactId string The unique identifier for a contact in CiviCRM.
    */
-  public function makeReadyFileFromTemplateFile($tempFileName, $contactId) {
+  public function makeReadyFileFromTemplateFile($tempFileName, $contactId)
+  {
     // TODO: Give better name.
 
     $zip = new ZipArchive();
@@ -100,7 +114,8 @@ class CRM_Onlyoffice_OnlyOffice {
     $fileList = [];
 
     $numberOfFiles = $zip->numFiles;
-    for ($i = 0; $i < $numberOfFiles; $i++) {
+    for ($i = 0; $i < $numberOfFiles; $i++)
+    {
       $fileContent = $zip->getFromIndex($i);
       $fileName = $zip->getNameIndex($i);
 
@@ -113,7 +128,8 @@ class CRM_Onlyoffice_OnlyOffice {
 
     $processor->evaluate();
 
-    foreach ($processor->getRows() as $row) {
+    foreach ($processor->getRows() as $row)
+    {
       foreach ($fileList as $fileName) {
         $fileContent = $row->render($fileName);
 
@@ -129,7 +145,8 @@ class CRM_Onlyoffice_OnlyOffice {
    * @param $inputFileString string The input file as string.
    * @return false|string The output file as string.
    */
-  public function convertDocxToPdf($inputFileString) {
+  public function convertDocxToPdf($inputFileString)
+  {
     $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileString);
 
     $outputFileString = $this->websiteHandler->downloadFileAsPdf($uploadedFileData->id);
