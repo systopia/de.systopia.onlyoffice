@@ -1,5 +1,5 @@
 Package: de.systopia.onlyoffice
-Copyright (C) 2019, B. Endres <endres@systopia.de>
+Copyright (C) 2019-2020, SYSTOPIA <info@systopia.de>
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------
