@@ -31,6 +31,10 @@
   <item>
     <path>civicrm/onlyoffice/generator/accountselection</path>
     <page_callback>CRM_Onlyoffice_Form_AccountSelection</page_callback>
-    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
+  <!-- Template selection page -->
+  <item>
+    <path>civicrm/onlyoffice/generator/templateselection</path>
+    <page_callback>CRM_Onlyoffice_Form_TemplateSelection</page_callback>
   </item>
 </menu>
