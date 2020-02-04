@@ -14,11 +14,15 @@
 
 {crmScope extensionKey='de.systopia.onlyoffice'}
 
-  <div class="crm-section">
-    <div class="label">{$form.template_file_id.label}</div>
-    <div class="content">{$form.template_file_id.html}</div>
-    <div class="clear"></div>
-  </div>
+  {if $showErrorMessage}
+    {ts}There are no templates available for this account. Please create a template or select another account.{/ts}
+  {else}
+    <div class="crm-section">
+      <div class="label">{$form.template_file_id.label}</div>
+      <div class="content">{$form.template_file_id.html}</div>
+      <div class="clear"></div>
+    </div>
+  {/if}
 
   {* FOOTER *}
   <br>

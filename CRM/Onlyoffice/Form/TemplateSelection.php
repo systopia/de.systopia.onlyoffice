@@ -20,7 +20,7 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
 {
-  public function buildQuickForm ()
+  public function buildQuickForm()
   {
     parent::buildQuickForm();
 
@@ -29,31 +29,49 @@ class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
       return;
     };
 
-    $this->add(
-      'select',
-      'template_file_id',
-      E::ts('Template'),
-      CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates(),
-      true
-    );
+    $templates = CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplates();
+    $templateCount = count($templates);
 
-    $this->addButtons(
-      [
+    if ($templateCount == 0)
+    {
+      $this->assign('showErrorMessage', true);
+    }
+    else if ($templateCount == 1)
+    {
+      $templateFileId = array_key_first($templates);
+
+      $this->saveAccountAndContinue($templateFileId);
+
+      return;
+    }
+    else
+    {
+      $this->add(
+        'select',
+        'template_file_id',
+        E::ts('Template'),
+        $templates,
+        true
+      );
+
+      $this->addButtons(
         [
-          'type' => 'back',
-          'name' => E::ts('Back'),
-          'isDefault' => false,
-        ],
-        [
-          'type' => 'submit',
-          'name' => E::ts('Continue'),
-          'isDefault' => true,
-        ],
-      ]
-    );
+          [
+            'type' => 'back',
+            'name' => E::ts('Back'),
+            'isDefault' => false,
+          ],
+          [
+            'type' => 'submit',
+            'name' => E::ts('Continue'),
+            'isDefault' => true,
+          ],
+        ]
+      );
+    }
   }
 
-  public function postProcess ()
+  public function postProcess()
   {
     parent::postProcess();
 
@@ -61,6 +79,11 @@ class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
 
     $templateFileId = $values['template_file_id'];
 
+    $this->saveAccountAndContinue($templateFileId);
+  }
+
+  private function saveAccountAndContinue(string $templateFileId): void
+  {
     CRM_Onlyoffice_PageManager::setData(CRM_Onlyoffice_PageManager::TemplateDataKey, $templateFileId);
 
     CRM_Onlyoffice_PageManager::openNextPage();
