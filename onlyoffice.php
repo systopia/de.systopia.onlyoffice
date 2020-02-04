@@ -167,3 +167,17 @@ function onlyoffice_civicrm_entityTypes(&$entityTypes) {
   _onlyoffice_civix_civicrm_entityTypes($entityTypes);
 }
 
+
+// Polyfill for array_key_first (only needed for PHP < 7.3):
+if (!function_exists('array_key_first'))
+{
+  function array_key_first(array $array)
+  {
+    foreach ($array as $key => $unused)
+    {
+      return $key;
+    }
+
+    return null;
+  }
+}
