@@ -48,6 +48,7 @@ abstract class CRM_Onlyoffice_PageManager
     public const ResultPageName = 'Result';
 
     // TODO: Should these be here? Should we have a "DataManager", "DataStorage" or similiar instead?
+    public const AccountDataKey = 'account';
     public const TokenContextDataKey = 'tokenContext';
     public const TokensDataKey = 'tokens';
 

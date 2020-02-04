@@ -27,4 +27,10 @@
     <adminGroup>Communications</adminGroup>
     <icon>admin/small/rela_type.png</icon>
   </item>
+  <!-- Account selection page -->
+  <item>
+    <path>civicrm/onlyoffice/generator/accountselection</path>
+    <page_callback>CRM_Onlyoffice_Form_AccountSelection</page_callback>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
 </menu>
