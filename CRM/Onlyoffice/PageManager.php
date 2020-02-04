@@ -18,7 +18,7 @@ use CRM_Onlyoffice_ExtensionUtil as E;
 /**
  * Manages presentation and order of the Forms/Pages.
  */
-class CRM_Onlyoffice_PageManager
+abstract class CRM_Onlyoffice_PageManager
 {
     private const Pages = [
         'EntryPoint',
