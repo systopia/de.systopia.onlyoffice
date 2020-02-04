@@ -63,6 +63,16 @@ class CRM_Onlyoffice_Form_AccountSelection extends CRM_Core_Form
         true
       );
     }
+
+    $this->addButtons(
+      [
+        [
+          'type' => 'submit',
+          'name' => E::ts('Continue'),
+          'isDefault' => true,
+        ],
+      ]
+    );
   }
 
   public function postProcess()
