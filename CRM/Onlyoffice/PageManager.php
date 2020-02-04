@@ -47,6 +47,10 @@ abstract class CRM_Onlyoffice_PageManager
     public const RunnerPageName = 'Runner';
     public const ResultPageName = 'Result';
 
+    // TODO: Should these be here? Should we have a "DataManager", "DataStorage" or similiar instead?
+    public const TokenContextDataKey = 'tokenContext';
+    public const TokensDataKey = 'tokens';
+
     /**
      * Get the current page from the session.
      */

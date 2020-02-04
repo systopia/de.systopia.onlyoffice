@@ -11,7 +11,7 @@ function onlyoffice_civicrm_searchTasks($objectType, &$tasks)
   {
     $tasks[] = [
       'title' => E::ts('Create PDFs via OnlyOffice'),
-      'class' => 'CRM_Onlyoffice_Form_Task_Generator',
+      'class' => 'CRM_Onlyoffice_Form_Task_ContactSearch',
       'result' => false
     ];
   }
