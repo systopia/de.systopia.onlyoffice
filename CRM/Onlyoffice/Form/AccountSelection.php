@@ -20,6 +20,8 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Form_AccountSelection extends CRM_Core_Form
 {
+  private const ConnectionRadioboxElementId = 'connection_radiobox';
+
   public function buildQuickForm()
   {
     parent::buildQuickForm();
@@ -55,7 +57,7 @@ class CRM_Onlyoffice_Form_AccountSelection extends CRM_Core_Form
       }
 
       $this->addRadio(
-        'connection_radiobox',
+        self::ConnectionRadioboxElementId,
         E::ts('Select the account that shall be used in the PDF generation:'),
         $values,
         [],
@@ -78,6 +80,15 @@ class CRM_Onlyoffice_Form_AccountSelection extends CRM_Core_Form
   public function postProcess()
   {
     parent::postProcess();
+
+    $values = $this->exportValues();
+
+    $connections = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey);
+
+    $userName = $values[self::ConnectionRadioboxElementId];
+    $userPassword = $connections[$userName];
+
+    $this->saveAccountAndContinue($userName, $userPassword);
   }
 
   private function saveAccountAndContinue(string $userName, string $userPassword): void
