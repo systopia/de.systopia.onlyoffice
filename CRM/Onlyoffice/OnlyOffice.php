@@ -49,15 +49,13 @@ final class CRM_Onlyoffice_OnlyOffice
    */
   function __construct()
   {
-    $connections = CRM_Onlyoffice_Configuration::getUserSetting(CRM_Onlyoffice_Configuration::UserConnectionsKey);
-    $userName = array_keys($connections)[0]; // FIXME: This should be selectable by the user not hardcoded the first connection found!
-    $userPassword = $connections[$userName];
-
     $baseUrl = CRM_Onlyoffice_Configuration::getAdminSetting(CRM_Onlyoffice_Configuration::BaseUrlKey);
+
+    $account = CRM_Onlyoffice_PageManager::getData(CRM_Onlyoffice_PageManager::AccountDataKey);
 
     $this->apiHandler = new CRM_Onlyoffice_ApiHandler();
     $this->apiHandler->setBaseUrl($baseUrl);
-    $this->apiHandler->authenticate($userName, $userPassword);
+    $this->apiHandler->authenticate($account['name'], $account['password']);
 
     $this->websiteHandler = new CRM_Onlyoffice_WebsiteHandler();
     $this->websiteHandler->setBaseUrl($baseUrl);
