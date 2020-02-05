@@ -63,20 +63,43 @@ final class CRM_Onlyoffice_OnlyOffice
   }
 
   /**
-   * Get all templates.
-   * @return array An array of all templates in the form "id => title".
+   * Get all folders as a tree containing the information about folders and their files.
+   * @return array A list of trees, one for each main folder (private, common, shared).
    */
-  public function getTemplates()
+  public function getFolderTrees(): array
   {
-    $files = $this->apiHandler->listFiles();
+    $folderIds = [$this->apiHandler::PrivateFolderId, $this->apiHandler::CommonFolderId, $this->apiHandler::SharedFolderId];
 
-    $templates = [];
-    foreach ($files as $file)
+    $result = [];
+
+    foreach ($folderIds as $folderId)
     {
-      $templates[$file->id] = $file->title;
+      $tree = $this->buildFolderAsTree($folderId);
+
+      $result[] = $tree;
     }
 
-    return $templates;
+    return $result;
+  }
+
+  private function buildFolderAsTree(string $folderId): object
+  {
+    $result = new stdClass();
+
+    $folder = $this->apiHandler->listAll($folderId);
+
+    $result->current = $folder->current;
+
+    $result->files = $folder->files;
+
+    $folders = [];
+    foreach ($folder->folders as $childFolder)
+    {
+      $folders[] = $this->buildFolderAsTree($childFolder->id);
+    }
+    $result->folders = $folders;
+
+    return $result;
   }
 
   /**

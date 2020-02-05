@@ -86,7 +86,22 @@ class CRM_Onlyoffice_ApiHandler
   }
 
   /**
-   * List all files of the authenticated user.
+   * List everything (files, folders, extra information) inside a given folder.
+   * @param string $folderId The ID of the folder to look in.
+   * @return object The response object containing all given information.
+   */
+  public function listAll(string $folderId): object
+  {
+    $result = $this->makeGetRequest('files/' . $folderId);
+
+    return $result->response;
+
+    // TODO: Test for returned status code.
+  }
+
+  /**
+   * List all files inside a given folder.
+   * @param string $folderId The ID of the files' folder.
    * @return array An array with multiple objects describing the files.
    */
   public function listFiles(string $folderId): array
@@ -94,6 +109,20 @@ class CRM_Onlyoffice_ApiHandler
     $all = $this->listAll($folderId);
 
     return $all->files;
+
+    // TODO: Test for returned status code.
+  }
+
+  /**
+   * List all folders inside a given folder.
+   * @param string $folderId The ID of the folder to look in.
+   * @return array An array with multiple objects describing the folders.
+   */
+  public function listFolders(string $folderId): array
+  {
+    $all = $this->listAll($folderId);
+
+    return $all->folders;
 
     // TODO: Test for returned status code.
   }

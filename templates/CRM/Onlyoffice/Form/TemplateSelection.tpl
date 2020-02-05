@@ -17,10 +17,10 @@
   {if $showErrorMessage}
     {ts}There are no templates available for this account. Please create a template or select another account.{/ts}
   {else}
-    <div class="crm-section">
-      <div class="label">{$form.template_file_id.label}</div>
-      <div class="content">{$form.template_file_id.html}</div>
-      <div class="clear"></div>
+    <div>
+      <div>{ts}Choose a template:{/ts}</div>
+      <ul id="templateTrees">
+      </ul>
     </div>
   {/if}
 
@@ -29,5 +29,19 @@
   <div class="crm-submit-buttons">
     {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>
+
+  <template id="htmlTreeTemplate">
+    <li>
+      <div></div>
+      <ul class="folderTreeList"></ul>
+    </li>
+  </template>
+
+  <template id="htmlFileEntryTemplate">
+    <li>
+      <input type="radio" name="template_file_id">
+      <span></span>
+    </li>
+  </template>
 
 {/crmScope}
