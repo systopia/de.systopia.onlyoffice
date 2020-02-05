@@ -16,29 +16,38 @@
 /*
  * Class for handling API calls to the OnlyOffice server.
  */
-class CRM_Onlyoffice_ApiHandler {
-
+class CRM_Onlyoffice_ApiHandler
+{
   private $baseUrl; //Guaranteed to end with a slash.
   private $token;
 
+  public const PrivateFolderId = '@my';
+  public const CommonFolderId = '@common';
+  public const SharedFolderId = '@share';
+
   /**
    * Generates base URL for API usage based on a given server domain.
-   * @param $url string The URL.
+   * @param string $url The URL.
    */
-  public function setBaseUrl($url) {
+  public function setBaseUrl(string $url): void
+  {
     // TODO: Test for empty base URL setting and give out error.
     if (mb_substr($url, -1) != '/')
+    {
       $url .= '/';
+    }
+
     $url .= 'api/2.0/';
     $this->baseUrl = $url;
   }
 
   /**
    * Authenticates on server via username and password to get a token.
-   * @param $name string The user name.
-   * @param $password string The password for the given user name.
+   * @param string $name The user name.
+   * @param string $password The password for the given user name.
    */
-  public function authenticate($name, $password) {
+  public function authenticate(string $name, string $password): void
+  {
     $data = [
       'userName' => $name,
       'password' => $password
@@ -54,7 +63,8 @@ class CRM_Onlyoffice_ApiHandler {
    * Extracts the session cookies from the API for website wide use.
    * @return string A cookie string containing all needed session cookies.
    */
-  public function getSessionCookies() {
+  public function getSessionCookies(): string
+  {
     $headerArray = $this->getRequestHeader('capabilities');
 
     $headerString = implode("\n", $headerArray);
@@ -64,7 +74,8 @@ class CRM_Onlyoffice_ApiHandler {
     $rawCookies = $rawCookies[1]; //We only need the part after "Set-Cookie".
 
     $cookies = [];
-    foreach ($rawCookies as $rawCookie) {
+    foreach ($rawCookies as $rawCookie)
+    {
       $bakedCookie = explode('; ', $rawCookie);
       $cookies[] = $bakedCookie[0]; //Actual cookie is the first entry.
     }
@@ -78,21 +89,23 @@ class CRM_Onlyoffice_ApiHandler {
    * List all files of the authenticated user.
    * @return array An array with multiple objects describing the files.
    */
-  public function listFiles() {
-    $result = $this->makeGetRequest('files/@my');
+  public function listFiles(string $folderId): array
+  {
+    $all = $this->listAll($folderId);
 
-    return $result->response->files;
+    return $all->files;
 
     // TODO: Test for returned status code.
   }
 
   /**
    * Uploads a DocX file to the user space.
-   * @param $fileName string The name of the file including the file extension.
-   * @param $file string The file as string to be uploaded.
+   * @param string $fileName The name of the file including the file extension.
+   * @param string $file The file as string to be uploaded.
    * @return object The response containing file info.
    */
-  public function uploadDocx($fileName, $file) {
+  public function uploadDocx(string $fileName, string $file): object
+  {
     $result = $this->makePostRequestAsDocx('files/@my/upload', $fileName, $file);
 
     return $result->response;
@@ -102,10 +115,11 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Deletes a file from the user space.
-   * @param $fileId string The unique identifier for the file.
+   * @param string $fileId The unique identifier for the file.
    * @return object The response containing deletion info.
    */
-  public function deleteFile($fileId) {
+  public function deleteFile(string $fileId): object
+  {
     $data = [
       'fileId' => $fileId,
       'deleteAfter' => false, //Don't delete after request is finished.
@@ -121,17 +135,18 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a GET request to the API without custom data.
-   * @param $method string The target method of the API.
+   * @param string $method The target method of the API.
    * @return object A JSON decoded object of the returned data.
    */
-  private function makeGetRequest($method) {
-    $options = array(
-      'http' => array(
+  private function makeGetRequest(string $method): object
+  {
+    $options = [
+      'http' => [
         'method' => 'GET',
         'header'=> "Accept: application/json\r\n" .
-          'Authorization:' . $this->token . "\r\n"
-      )
-    );
+                   'Authorization:' . $this->token . "\r\n"
+      ]
+    ];
 
     $url = $this->baseUrl . $method;
 
@@ -145,11 +160,12 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a POST request to the API with JSON encoded custom data.
-   * @param $method string The target method of the API.
-   * @param $data string The body content for the request.
+   * @param string $method The target method of the API.
+   * @param array $data The body content for the request.
    * @return object A JSON decoded object of the returned data.
    */
-  private function makePostRequestAsJson($method, $data) {
+  private function makePostRequestAsJson(string $method, array $data): object
+  {
     $header = "Content-Type: application/json\r\n" .
               "Accept: application/json\r\n";
 
@@ -164,12 +180,13 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a POST request to the API with a DocX file as payload.
-   * @param $method string The target method of the API.
-   * @param $fileName string The name of the file including the file extension.
-   * @param $file string The file as string to be uploaded.
+   * @param string $method The target method of the API.
+   * @param string $fileName The name of the file including the file extension.
+   * @param string $file The file as string to be uploaded.
    * @return object The full decoded response body as string.
    */
-  private function makePostRequestAsDocx($method, $fileName, $file) {
+  private function makePostRequestAsDocx(string $method, string $fileName, string $file): object
+  {
     $header = 'Content-Disposition: inline; filename="' . $fileName . '"' . "\r\n" .
       'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document' . "\r\n" .
       "Accept: application/json\r\n";
@@ -183,11 +200,12 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a DELETE request to the API with JSON encoded custom data.
-   * @param $method string The target method of the API.
-   * @param $data string The body content for the request.
+   * @param string $method The target method of the API.
+   * @param array $data The body content for the request.
    * @return object A JSON decoded object of the returned data.
    */
-  private function makeDeleteRequest($method, $data) {
+  private function makeDeleteRequest(string $method, array $data): object
+  {
     $header = "Content-Type: application/json\r\n" .
       "Accept: application/json\r\n";
 
@@ -202,20 +220,21 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Makes a POST/DELETE request to the API with custom header and data.
-   * @param $method string The target method of the API.
-   * @param $header string The header for the request.
-   * @param $data string The body content for the request.
-   * @param $isDelete boolean If true, the request type will be DELETE instead of POST.
-   * @return false|string The response body.
+   * @param string $method The target method of the API.
+   * @param string $header The header for the request.
+   * @param string $data The body content for the request.
+   * @param bool $isDelete If true, the request type will be DELETE instead of POST.
+   * @return string|false The response body.
    */
-  private function makeRawRequest($method, $header, $data, $isDelete = false) {
-    $options = array(
-      'http' => array(
+  private function makeRawRequest(string $method, string $header, string $data, bool $isDelete = false)
+  {
+    $options = [
+      'http' => [
         'method' => $isDelete ? 'DELETE' : 'POST',
         'content' => $data,
         'header'=> 'Authorization:' . $this->token . "\r\n" . $header
-      )
-    );
+      ]
+    ];
 
     $url = $this->baseUrl . $method;
 
@@ -229,17 +248,18 @@ class CRM_Onlyoffice_ApiHandler {
 
   /**
    * Gets the response header from a GET request to the API.
-   * @param $method string The target method of the API.
+   * @param string $method The target method of the API.
    * @return array The unformatted header.
    */
-  private function getRequestHeader($method) {
-    $options = array(
-      'http' => array(
+  private function getRequestHeader(string $method): array
+  {
+    $options = [
+      'http' => [
         'method' => 'GET',
         'header'=> "Accept: application/json\r\n" .
           'Authorization:' . $this->token . "\r\n"
-      )
-    );
+      ]
+    ];
 
     $url = $this->baseUrl . $method;
 
