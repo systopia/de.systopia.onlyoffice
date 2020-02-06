@@ -141,7 +141,11 @@ class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
 
   private function saveAccountAndContinue(string $templateFileId): void
   {
-    CRM_Onlyoffice_PageManager::setData(CRM_Onlyoffice_PageManager::TemplateDataKey, $templateFileId);
+    $data = CRM_Onlyoffice_PageManager::getData();
+
+    $data->templateId = $templateFileId;
+
+    CRM_Onlyoffice_PageManager::setData($data);
 
     CRM_Onlyoffice_PageManager::openNextPage();
   }

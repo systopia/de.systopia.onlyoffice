@@ -93,12 +93,14 @@ class CRM_Onlyoffice_Form_AccountSelection extends CRM_Core_Form
 
   private function saveAccountAndContinue(string $userName, string $userPassword): void
   {
-    $account = [
-      'name' => $userName,
-      'password' => $userPassword,
-    ];
+    $account = new CRM_Onlyoffice_Object_Account();
+    $account->name = $userName;
+    $account->password = $userPassword;
 
-    CRM_Onlyoffice_PageManager::setData(CRM_Onlyoffice_PageManager::AccountDataKey, $account);
+    $data = CRM_Onlyoffice_PageManager::getData();
+    $data->account = $account;
+
+    CRM_Onlyoffice_PageManager::setData($data);
 
     CRM_Onlyoffice_PageManager::openNextPage();
   }

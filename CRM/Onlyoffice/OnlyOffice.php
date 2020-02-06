@@ -51,11 +51,11 @@ final class CRM_Onlyoffice_OnlyOffice
   {
     $baseUrl = CRM_Onlyoffice_Configuration::getAdminSetting(CRM_Onlyoffice_Configuration::BaseUrlKey);
 
-    $account = CRM_Onlyoffice_PageManager::getData(CRM_Onlyoffice_PageManager::AccountDataKey);
+    $pageData = CRM_Onlyoffice_PageManager::getData();
 
     $this->apiHandler = new CRM_Onlyoffice_ApiHandler();
     $this->apiHandler->setBaseUrl($baseUrl);
-    $this->apiHandler->authenticate($account['name'], $account['password']);
+    $this->apiHandler->authenticate($pageData->account->name, $pageData->account->password);
 
     $this->websiteHandler = new CRM_Onlyoffice_WebsiteHandler();
     $this->websiteHandler->setBaseUrl($baseUrl);

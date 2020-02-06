@@ -13,26 +13,14 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*/
 
-use CRM_Onlyoffice_ExtensionUtil as E;
-
 /**
- * Task entry point to Onlyoffice for contact searches.
+ * Contains Onlyoffice account information.
  */
-class CRM_Onlyoffice_Form_Task_ContactSearch extends CRM_Onlyoffice_Form_Task_BaseClass
+class CRM_Onlyoffice_Object_Account extends CRM_Onlyoffice_Object_BaseClass
 {
-  /**
-   * Collect and save all relevant task specific data (token and token context). \
-   * Must be implemented by the child class.
-   */
-  protected function saveData()
-  {
-    $data = CRM_Onlyoffice_PageManager::getData();
+  /** @var string $name The name of the account/user. */
+  public $name;
 
-    $data->tokenContext = [
-      'contactId' => $this->_contactIds
-    ];
-    $data->tokens = [];
-
-    CRM_Onlyoffice_PageManager::setData($data);
-  }
+  /** @var string $password */
+  public $password;
 }

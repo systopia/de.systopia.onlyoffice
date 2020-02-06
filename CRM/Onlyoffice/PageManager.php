@@ -47,11 +47,6 @@ abstract class CRM_Onlyoffice_PageManager
     public const RunnerPageName = 'Runner';
     public const ResultPageName = 'Result';
 
-    // TODO: Should these be here? Should we have a "DataManager", "DataStorage" or similiar instead?
-    public const AccountDataKey = 'account';
-    public const TemplateDataKey = 'template';
-    public const TokenContextDataKey = 'tokenContext';
-    public const TokensDataKey = 'tokens';
 
     /**
      * Get the current page from the session.
@@ -69,18 +64,6 @@ abstract class CRM_Onlyoffice_PageManager
     private static function setCurrentPage(string $page): void
     {
         CRM_Core_Session::singleton()->set(self::CurrentPageSessionKey, $page, self::SessionKeyPrefix);
-    }
-
-    private static function getAllData(): array
-    {
-        $allData = CRM_Core_Session::singleton()->get(self::DataSessionKey, self::SessionKeyPrefix);
-
-        return $allData;
-    }
-
-    private static function setAllData(array $allData): void
-    {
-        CRM_Core_Session::singleton()->set(self::DataSessionKey, $allData, self::SessionKeyPrefix);
     }
 
     private static function convertPathToUrl(string $path): string
@@ -126,7 +109,7 @@ abstract class CRM_Onlyoffice_PageManager
     public static function startSession(): void
     {
         // Reset all session data:
-        self::setAllData([]);
+        self::setData(new CRM_Onlyoffice_Object_PageData());
 
         // Set the page to the "virtual" entry point:
         $entryPoint = self::Pages[0];
@@ -136,7 +119,7 @@ abstract class CRM_Onlyoffice_PageManager
     public static function endSession(): void
     {
         // Reset all session data:
-        self::setAllData([]);
+        self::setData(new CRM_Onlyoffice_Object_PageData());
 
         // TODO: Forward to the result or back or anything else.
     }
@@ -186,30 +169,26 @@ abstract class CRM_Onlyoffice_PageManager
     }
 
     /**
-     * Get data stored in the session.
-     * @param string $key The unique identifier for the data.
-     * @return mixed The data for this key.
+     * Get the data stored in the session.
+     * @return CRM_Onlyoffice_Object_PageData The page data.
      */
-    public static function getData(string $key)
+    public static function getData(): CRM_Onlyoffice_Object_PageData
     {
-        $allData = self::getAllData();
+        $dataArray = CRM_Core_Session::singleton()->get(self::DataSessionKey, self::SessionKeyPrefix);
 
-        $data = $allData[$key];
+        $data = new CRM_Onlyoffice_Object_PageData($dataArray);
 
         return $data;
     }
 
     /**
      * Store data in the session.
-     * @param string $key The unique identifier of the data.
-     * @param mixed $data The data to set for this key.
+     * @param CRM_Onlyoffice_Object_PageData $data The data to store.
      */
-    public static function setData(string $key, $data): void
+    public static function setData(CRM_Onlyoffice_Object_PageData $data): void
     {
-        $allData = self::getAllData();
+        $dataArray = $data->toArray();
 
-        $allData[$key] = $data;
-
-        self::setAllData($allData);
+        CRM_Core_Session::singleton()->set(self::DataSessionKey, $dataArray, self::SessionKeyPrefix);
     }
 }
