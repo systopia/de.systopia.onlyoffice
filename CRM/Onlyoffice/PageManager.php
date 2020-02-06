@@ -47,7 +47,6 @@ abstract class CRM_Onlyoffice_PageManager
     public const RunnerPageName = 'Runner';
     public const ResultPageName = 'Result';
 
-
     /**
      * Get the current page from the session.
      */
@@ -73,10 +72,20 @@ abstract class CRM_Onlyoffice_PageManager
         return $url;
     }
 
-    private static function redirectToPage(string $page): void
+    /**
+     * Get the URL for a given page.
+     */
+    private static function getPageUrl(string $page): string
     {
         $pagePath = self::PagePaths[$page];
         $pageUrl = self::convertPathToUrl($pagePath);
+
+        return $pageUrl;
+    }
+
+    private static function redirectToPage(string $page): void
+    {
+        $pageUrl = self::getPageUrl($page);
 
         CRM_Utils_System::redirect($pageUrl);
     }
@@ -84,8 +93,9 @@ abstract class CRM_Onlyoffice_PageManager
     /**
      * Open a page relative in position to the current page.
      * @param int $difference The difference in the position of both pages, negative values mean going backwards.
+     * @param bool $redirect If true, the user will be automatically redirected to the next page.
      */
-    private static function openRelativePage(int $difference): void
+    private static function openRelativePage(int $difference, bool $redirect = true): void
     {
         $currentPage = self::getCurrentPage();
         $currentPageIndex = array_search($currentPage, self::Pages);
@@ -97,7 +107,11 @@ abstract class CRM_Onlyoffice_PageManager
             $nextPage = self::Pages[$nextPageIndex];
 
             self::setCurrentPage($nextPage);
-            self::redirectToPage($nextPage);
+
+            if ($redirect)
+            {
+                self::redirectToPage($nextPage);
+            }
         }
     }
 
@@ -154,18 +168,32 @@ abstract class CRM_Onlyoffice_PageManager
 
     /**
      * Redirect to the next page.
+     * @param bool $redirect If true, the user will be automatically redirected to the next page.
      */
-    public static function openNextPage(): void
+    public static function openNextPage(bool $redirect = true): void
     {
-        self::openRelativePage(+1);
+        self::openRelativePage(+1, $redirect);
     }
 
     /**
      * Redirect to the previous page.
+     * @param bool $redirect If true, the user will be automatically redirected to the previous page.
      */
-    public static function openPreviousPage(): void
+    public static function openPreviousPage(bool $redirect = true): void
     {
-        self::openRelativePage(-1);
+        self::openRelativePage(-1, $redirect);
+    }
+
+    /**
+     * Get the URL to the current page.
+     */
+    public static function getUrlToCurrentPage(): string
+    {
+        $currentPage = self::getCurrentPage();
+
+        $currentUrl = self::getPageUrl($currentPage);
+
+        return $currentUrl;
     }
 
     /**

@@ -104,14 +104,26 @@ final class CRM_Onlyoffice_OnlyOffice
 
   /**
    * Downloads a template file as string.
-   * @param $fileId string The id of the file to download.
+   * @param string $fileId The id of the file to download.
    * @return false|string The downloaded file as string.
    */
-  public function downloadTemplateFile($fileId)
+  public function downloadTemplateFile(string $fileId)
   {
     $fileString = $this->websiteHandler->downloadFile($fileId);
 
     return $fileString;
+  }
+
+  /**
+   * Get the name/title of a template file by it's ID.
+   * @param string $fileID The ID to look for.
+   * @return string The name/title of the given file.
+   */
+  public function getTemplateFileName(string $fileId): string
+  {
+    $fileData = $this->apiHandler->getFileInformation($fileId);
+
+    return $fileData->title;
   }
 
   /**

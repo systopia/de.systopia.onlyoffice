@@ -16,35 +16,31 @@
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 /**
- * Task entry point to Onlyoffice for contact searches.
+ * Page for showing the result of the generator.
  */
-class CRM_Onlyoffice_Form_Task_ContactSearch extends CRM_Onlyoffice_Form_Task_BaseClass
+class CRM_Onlyoffice_Form_Result extends CRM_Core_Form
 {
-  /**
-   * Collect and save all relevant task specific data (token and token context). \
-   * Must be implemented by the child class.
-   */
-  protected function saveData()
+  public function buildQuickForm()
   {
-    /** @var CRM_Onlyoffice_Object_TokenContext[] $tokenContexts */
-    $tokenContexts = [];
+    parent::buildQuickForm();
 
-    foreach ($this->_contactIds as $contactId)
+    if (!CRM_Onlyoffice_PageManager::openedPageIsCorrect(CRM_Onlyoffice_PageManager::ResultPageName))
     {
-      $tokenContext = new CRM_Onlyoffice_Object_TokenContext();
-      $tokenContext->contexts = [
-        'contactId' => $contactId,
-      ];
-      $tokenContext->tokens = [];
+      return;
+    };
 
-      $tokenContexts[] = $tokenContext;
-    }
+    // TODO: Show a result page with a download button.
 
     $data = CRM_Onlyoffice_PageManager::getData();
 
-    $data->tokenContexts = $tokenContexts;
-    $data->mainContext = 'contactId';
+    $templateFileName = CRM_Onlyoffice_OnlyOffice::getSingleton()->getTemplateFileName($data->templateId);
 
-    CRM_Onlyoffice_PageManager::setData($data);
+    // Read the file completely:
+    $resultFileString = file_get_contents($data->zipArchivePath);
+
+    CRM_Utils_System::download($templateFileName . '.zip', 'application/zip', $resultFileString);
+
+    CRM_Onlyoffice_PageManager::endSession();
   }
+
 }

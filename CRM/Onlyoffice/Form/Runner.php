@@ -16,35 +16,32 @@
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 /**
- * Task entry point to Onlyoffice for contact searches.
+ * Page for starting the runner.
  */
-class CRM_Onlyoffice_Form_Task_ContactSearch extends CRM_Onlyoffice_Form_Task_BaseClass
+class CRM_Onlyoffice_Form_Runner extends CRM_Core_Form
 {
-  /**
-   * Collect and save all relevant task specific data (token and token context). \
-   * Must be implemented by the child class.
-   */
-  protected function saveData()
+  public function buildQuickForm()
   {
-    /** @var CRM_Onlyoffice_Object_TokenContext[] $tokenContexts */
-    $tokenContexts = [];
+    parent::buildQuickForm();
 
-    foreach ($this->_contactIds as $contactId)
+    if (!CRM_Onlyoffice_PageManager::openedPageIsCorrect(CRM_Onlyoffice_PageManager::RunnerPageName))
     {
-      $tokenContext = new CRM_Onlyoffice_Object_TokenContext();
-      $tokenContext->contexts = [
-        'contactId' => $contactId,
-      ];
-      $tokenContext->tokens = [];
-
-      $tokenContexts[] = $tokenContext;
-    }
+      return;
+    };
 
     $data = CRM_Onlyoffice_PageManager::getData();
 
-    $data->tokenContexts = $tokenContexts;
-    $data->mainContext = 'contactId';
+    $currentContactId = CRM_Core_Session::singleton()->getLoggedInContactID();
+
+    CRM_Onlyoffice_Queue_Generator_Launcher::prepare($data);
 
     CRM_Onlyoffice_PageManager::setData($data);
+
+    CRM_Onlyoffice_PageManager::openNextPage(false);
+
+    $targetPageUrl = CRM_Onlyoffice_PageManager::getUrlToCurrentPage();
+
+    CRM_Onlyoffice_Queue_Generator_Launcher::launchRunner($data, $currentContactId, $targetPageUrl);
   }
+
 }

@@ -128,6 +128,20 @@ class CRM_Onlyoffice_ApiHandler
   }
 
   /**
+   * Get all available file information.
+   * @param string $fileId The ID of the file to get the information for.
+   * @return object The information.
+   */
+  public function getFileInformation(string $fileId): object
+  {
+    $result = $this->makeGetRequest('files/file/' . $fileId);
+
+    return $result->response;
+
+    // TODO: Test for returned status code.
+  }
+
+  /**
    * Uploads a DocX file to the user space.
    * @param string $fileName The name of the file including the file extension.
    * @param string $file The file as string to be uploaded.

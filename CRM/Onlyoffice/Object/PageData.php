@@ -24,11 +24,14 @@ class CRM_Onlyoffice_Object_PageData extends CRM_Onlyoffice_Object_BaseClass
   /** @var string $templateId */
   public $templateId;
 
-  /** @var array $tokenContext */
-  public $tokenContext;
+  /** @var CRM_Onlyoffice_Object_TokenContext[] $tokenContexts */
+  public $tokenContexts;
 
-  /** @var array $tokens */
-  public $tokens;
+  /** @var string $mainContext Defines the main context containing an unique identifier for the contexts. */
+  public $mainContext;
+
+  /** @var string $zipArchivePath The path to the zip archive containing all generated documents. */
+  public $zipArchivePath;
 
   /**
    * @param array $array The given array will be used to initialise the page data.
@@ -41,6 +44,20 @@ class CRM_Onlyoffice_Object_PageData extends CRM_Onlyoffice_Object_BaseClass
     // NOTE: All object members are at this point either null (completely uninitialised) or an array (the serialised
     //       version of the object put in there by the parent constructor). So we can treat them as arrays which will,
     //       if casted, either do the necessary type hinting or convert the null to an actual empty array.
+
     $this->account = new CRM_Onlyoffice_Object_Account((array)$this->account);
+
+    if ($this->tokenContexts !== null)
+    {
+      /** @var CRM_Onlyoffice_Object_TokenContext[] $initialisedTokenContexts */
+      $initialisedTokenContexts = [];
+
+      foreach ($this->tokenContexts as $tokenContext)
+      {
+        $initialisedTokenContexts[] = new CRM_Onlyoffice_Object_TokenContext((array)$tokenContext);
+      }
+
+      $this->tokenContexts = $initialisedTokenContexts;
+    }
   }
 }

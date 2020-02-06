@@ -37,4 +37,14 @@
     <path>civicrm/onlyoffice/generator/templateselection</path>
     <page_callback>CRM_Onlyoffice_Form_TemplateSelection</page_callback>
   </item>
+  <!-- Runner Page -->
+  <item>
+    <path>civicrm/onlyoffice/generator/runner</path>
+    <page_callback>CRM_Onlyoffice_Form_Runner</page_callback>
+  </item>
+  <!-- Result Page -->
+  <item>
+    <path>civicrm/onlyoffice/generator/result</path>
+    <page_callback>CRM_Onlyoffice_Form_Result</page_callback>
+  </item>
 </menu>

@@ -134,9 +134,7 @@ class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
 
     $templateFileId = $values['template_file_id'];
 
-    //$this->saveAccountAndContinue($templateFileId);
-
-    print_r($values);
+    $this->saveAccountAndContinue($templateFileId);
   }
 
   private function saveAccountAndContinue(string $templateFileId): void

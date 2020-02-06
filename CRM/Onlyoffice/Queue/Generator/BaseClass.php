@@ -16,35 +16,27 @@
 use CRM_Onlyoffice_ExtensionUtil as E;
 
 /**
- * Task entry point to Onlyoffice for contact searches.
+ * Base class for the queue/runner generating documents.
  */
-class CRM_Onlyoffice_Form_Task_ContactSearch extends CRM_Onlyoffice_Form_Task_BaseClass
+abstract class CRM_Onlyoffice_Queue_Generator_BaseClass
 {
+  protected const BatchSize = 10;
+
   /**
-   * Collect and save all relevant task specific data (token and token context). \
-   * Must be implemented by the child class.
+   * Create an unused path for a temp file to be created.
+   * @param string|null $userPrefix An optional prefix for the file name.
+   * @return string The file path.
    */
-  protected function saveData()
+  protected static function createTempFilePath(?string $userPrefix = null): string
   {
-    /** @var CRM_Onlyoffice_Object_TokenContext[] $tokenContexts */
-    $tokenContexts = [];
-
-    foreach ($this->_contactIds as $contactId)
+    $prefix = 'CiviCRM_OnlyOffice_';
+    if ($userPrefix !== null)
     {
-      $tokenContext = new CRM_Onlyoffice_Object_TokenContext();
-      $tokenContext->contexts = [
-        'contactId' => $contactId,
-      ];
-      $tokenContext->tokens = [];
-
-      $tokenContexts[] = $tokenContext;
+      $prefix .= $userPrefix . '_';
     }
 
-    $data = CRM_Onlyoffice_PageManager::getData();
+    $tempFilePath = tempnam(sys_get_temp_dir(), $userPrefix);
 
-    $data->tokenContexts = $tokenContexts;
-    $data->mainContext = 'contactId';
-
-    CRM_Onlyoffice_PageManager::setData($data);
+    return $tempFilePath;
   }
 }
