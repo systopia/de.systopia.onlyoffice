@@ -1,7 +1,7 @@
 <?php
 /*-------------------------------------------------------+
 | SYSTOPIA OnlyOffice Integration                        |
-| Copyright (C) 2019 SYSTOPIA                            |
+| Copyright (C) 2019-2020 SYSTOPIA                       |
 | Author: B. Zschiedrich (zschiedrich@systopia.de)       |
 +--------------------------------------------------------+
 | This program is released as free software under the    |

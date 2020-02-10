@@ -1,7 +1,7 @@
 <?php
 /*-------------------------------------------------------+
 | SYSTOPIA OnlyOffice Integration                        |
-| Copyright (C) 2019 SYSTOPIA                            |
+| Copyright (C) 2019-2020 SYSTOPIA                       |
 | Author: B. Zschiedrich (zschiedrich@systopia.de)       |
 +--------------------------------------------------------+
 | This program is released as free software under the    |
@@ -128,11 +128,12 @@ final class CRM_Onlyoffice_OnlyOffice
 
   /**
    * Files a template file via token resolving with contact specific content.
-   * @param $tempFileName string The full name/path to the file.
-   * @param $contexts array An array in the form "contextName => contextData" with different token contexts
+   * @param string $tempFileName The full name/path to the file.
+   * @param array $contexts An array in the form "contextName => contextData" with different token contexts
    *                        and their needed data (for example, contact IDs).
+   * @param array $tokens An array of key-value pairs being used as custom tokens.
    */
-  public function makeReadyFileFromTemplateFile($tempFileName, $contexts, $tokens=[])
+  public function makeReadyFileFromTemplateFile(string $tempFileName, array $contexts, array $tokens=[]): void
   {
     // TODO: Give better name.
 
@@ -179,10 +180,10 @@ final class CRM_Onlyoffice_OnlyOffice
 
   /**
    * Converts a DocX file to PDF.
-   * @param $inputFileString string The input file as string.
+   * @param string $inputFileString The input file as string.
    * @return false|string The output file as string.
    */
-  public function convertDocxToPdf($inputFileString)
+  public function convertDocxToPdf(string $inputFileString)
   {
     $uploadedFileData = $this->apiHandler->uploadDocx(sha1(rand()) . '.docx', $inputFileString);
 

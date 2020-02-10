@@ -37,10 +37,15 @@ class CRM_Onlyoffice_Form_Result extends CRM_Core_Form
 
     // Read the file completely:
     $resultFileString = file_get_contents($data->zipArchivePath);
+    // TODO: Do something with the file...
 
     CRM_Utils_System::download($templateFileName . '.zip', 'application/zip', $resultFileString);
 
     CRM_Onlyoffice_PageManager::endSession();
   }
 
+  public function postProcess()
+  {
+    parent::postProcess();
+  }
 }
