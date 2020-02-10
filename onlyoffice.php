@@ -27,7 +27,7 @@ function onlyoffice_civicrm_summaryActions(&$actions, $contactID)
       'weight'      => 2409,
       'ref'         => 'connect_user_with_onlyoffice',
       'key'         => 'onlyoffice_connect_user_account',
-      'href'        => CRM_Utils_System::url('civicrm/onlyoffice/settings/admin', "reset=1&cid={$contactID}"),
+      'href'        => CRM_Utils_System::url('civicrm/onlyoffice/settings/connectuser/connection', "reset=1&cid={$contactID}"),
       'permissions' => ['administer CiviCRM']
     ];
   }
