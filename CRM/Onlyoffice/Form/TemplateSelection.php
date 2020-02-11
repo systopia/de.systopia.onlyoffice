@@ -53,7 +53,7 @@ class CRM_Onlyoffice_Form_TemplateSelection extends CRM_Core_Form
       $this->add(
         'select',
         'template_file_id',
-        E::ts('Choose a template'),
+        E::ts('Choose a template:'),
         null,
         true
       );

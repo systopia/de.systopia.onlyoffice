@@ -33,7 +33,7 @@ class CRM_Onlyoffice_Queue_Generator_Generator extends CRM_Onlyoffice_Queue_Gene
     $this->offset = $offset;
     $this->count = $count;
 
-    $this->title = E::ts('Generating document number ' . $offset);
+    $this->title = E::ts('Generating document number %1', [1 => $offset]);
   }
 
   public function run(): bool

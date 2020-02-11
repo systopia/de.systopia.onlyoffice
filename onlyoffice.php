@@ -10,7 +10,7 @@ function onlyoffice_civicrm_searchTasks($objectType, &$tasks)
   if ($objectType == 'contact')
   {
     $tasks[] = [
-      'title' => E::ts('Create PDFs via OnlyOffice'),
+      'title' => E::ts('Create PDFs via Onlyoffice'),
       'class' => 'CRM_Onlyoffice_Form_Task_ContactSearch',
       'result' => false
     ];

@@ -12,33 +12,37 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
-{if $showConnectionElements}
-  {section name=i start=0 loop=$numberOfConnectionElements}
+{crmScope extensionKey='de.systopia.onlyoffice'}
+
+  {if $showConnectionElements}
+    {section name=i start=0 loop=$numberOfConnectionElements}
+      <div>
+        <div class="crm-section">
+          {assign var=userNameIdentifier value="user_name_`$smarty.section.i.index`"}
+          <div class="label">{$form.$userNameIdentifier.label}</div>
+          <div class="content">{$form.$userNameIdentifier.html}</div>
+          <div class="clear"></div>
+        </div>
+        <div class="crm-section">
+          {assign var=userPasswordIdentifier value="user_password_`$smarty.section.i.index`"}
+          <div class="label">{$form.$userPasswordIdentifier.label}</div>
+          <div class="content">{$form.$userPasswordIdentifier.html}</div>
+          <div class="clear"></div>
+        </div>
+        <br>
+      </div>
+    {/section}
+  {else}
     <div>
-      <div class="crm-section">
-        {assign var=userNameIdentifier value="user_name_`$smarty.section.i.index`"}
-        <div class="label">{$form.$userNameIdentifier.label}</div>
-        <div class="content">{$form.$userNameIdentifier.html}</div>
-        <div class="clear"></div>
-      </div>
-      <div class="crm-section">
-        {assign var=userPasswordIdentifier value="user_password_`$smarty.section.i.index`"}
-        <div class="label">{$form.$userPasswordIdentifier.label}</div>
-        <div class="content">{$form.$userPasswordIdentifier.html}</div>
-        <div class="clear"></div>
-      </div>
-      <br>
+      {ts}The administrator disabled the ability for users to connect their accounts with Onlyoffice. Please contact your administrator.{/ts}
+      <br><br>
     </div>
-  {/section}
-{else}
-  <div>
-    {ts}The administrator disabled the ability for users to connect their accounts with Onlyoffice. Please contact your administrator.{/ts}
-    <br><br>
+  {/if}
+
+
+  {* FOOTER *}
+  <div class="crm-submit-buttons">
+  {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>
-{/if}
 
-
-{* FOOTER *}
-<div class="crm-submit-buttons">
-{include file="CRM/common/formButtons.tpl" location="bottom"}
-</div>
+{/crmScope}
