@@ -67,7 +67,7 @@ abstract class CRM_Onlyoffice_PageManager
 
     private static function convertPathToUrl(string $path): string
     {
-        $url = CRM_Utils_System::url($path, NULL, FALSE, NULL, TRUE, FALSE, TRUE);
+        $url = CRM_Utils_System::url($path, null, false, null, true, false, true);
 
         return $url;
     }
