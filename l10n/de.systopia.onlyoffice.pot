@@ -11,55 +11,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice URL"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "Enter a valid web address beginning with 'http://' or 'https://'."
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice user name"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice user password"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "Save"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Generate PDFs via OnlyOffice"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Template"
-msgstr ""
-
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Generate!"
+#: onlyoffice.php
+msgid "Create PDFs via Onlyoffice"
 msgstr ""
 
 #: onlyoffice.php
-msgid "Create PDFs via OnlyOffice"
+msgid "Connect user with Onlyoffice account"
 msgstr ""
 
-#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
-msgid ""
-"You can select any of the documents on your OnlyOffice instance as a "
-"template."
+#: CRM/Onlyoffice/Form/AccountSelection.php
+msgid "Select the account that shall be used in the PDF generation:"
 msgstr ""
 
-#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
-msgid ""
-"You'll find our OnlyOffice instance here:\n"
-"    <ul>\n"
-"      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
-"      <li>User: <code>%2</code></li>\n"
-"      <li>Password: <code>%3</code></li>\n"
-"    </ul>\n"
-"    "
+#: CRM/Onlyoffice/Form/AccountSelection.php
+msgid "Continue"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/TemplateSelection.php
+msgid "Choose a template:"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/TemplateSelection.php
+msgid "Back"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Onlyoffice URL"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Enter a valid web address beginning with 'http://' or 'https://'."
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Users are allowed to connect themselves with Onlyoffice."
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Save"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "Onlyoffice user name"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "Onlyoffice user password"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "OK"
+msgstr ""
+
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Selection.php
+msgid "Select user"
+msgstr ""
+
+#: CRM/Onlyoffice/Queue/Generator/Generator.php
+msgid "Generating document number %1"
+msgstr ""
+
+#: CRM/Onlyoffice/Queue/Generator/GeneratorStart.php
+msgid "Starting document generation."
+msgstr ""
+
+#: CRM/Onlyoffice/Queue/Generator/Launcher.php
+msgid "Generating documents"
+msgstr ""
+
+#: templates/CRM/Onlyoffice/Form/AccountSelection.tpl
+msgid "No connections to Onlyoffice could be found for your account. Please contact a system administator."
+msgstr ""
+
+#: templates/CRM/Onlyoffice/Form/TemplateSelection.tpl
+msgid "There are no templates available for this account. Please create a template or select another account."
+msgstr ""
+
+#: templates/CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "The administrator disabled the ability for users to connect their accounts with Onlyoffice. Please contact your administrator."
 msgstr ""

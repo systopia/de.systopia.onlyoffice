@@ -5,76 +5,142 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.onlyoffice\n"
-"POT-Creation-Date: 2019-03-11 15:39+0100\n"
+"POT-Creation-Date: 2019-03-11 15:38+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: B. Zschiedrich\n"
 "Language-Team: SYSTOPIA <info@systopia.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice URL"
-msgstr "OnlyOffice URL"
+#: onlyoffice.php
+msgid "Create PDFs via Onlyoffice"
+msgstr "PDFs mit Onlyoffice erstellen"
 
-#: CRM/Onlyoffice/Form/Settings.php
+#: onlyoffice.php
+msgid "Connect user with Onlyoffice account"
+msgstr "Nutzer mit Onlyoffice verknüpfen"
+
+#: CRM/Onlyoffice/Form/AccountSelection.php
+msgid "Select the account that shall be used in the PDF generation:"
+msgstr ""
+"Wählen Sie die Verbindung zu Onlyoffice aus, die für die PDF-Generierung "
+"verwendet werden soll:"
+
+#: CRM/Onlyoffice/Form/AccountSelection.php
+msgid "Continue"
+msgstr "Fortfahren"
+
+#: CRM/Onlyoffice/Form/TemplateSelection.php
+msgid "Choose a template:"
+msgstr "Vorlagenauswahl:"
+
+#: CRM/Onlyoffice/Form/TemplateSelection.php
+msgid "Back"
+msgstr "Zurück"
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Onlyoffice URL"
+msgstr "Onlyoffice URL"
+
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
 msgid "Enter a valid web address beginning with 'http://' or 'https://'."
-msgstr "Bitte eine valide URL eingeben, inklusive 'http://' oder 'https://'"
+msgstr "Bitte eine valide URL eingeben, inklusive 'http://' oder 'https://'."
 
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice user name"
-msgstr "OnlyOffice Benutzer"
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
+msgid "Users are allowed to connect themselves with Onlyoffice."
+msgstr "Nutzern ist es gestattet, sich selbst mit Onlyoffice zu verknüpfen."
 
-#: CRM/Onlyoffice/Form/Settings.php
-msgid "OnlyOffice user password"
-msgstr "OnlyOffice Passwort"
-
-#: CRM/Onlyoffice/Form/Settings.php
+#: CRM/Onlyoffice/Form/Settings/AdminSettings.php
 msgid "Save"
 msgstr "Speichern"
 
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Generate PDFs via OnlyOffice"
-msgstr "OnlyOffice PDFs erstellen"
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "Onlyoffice user name"
+msgstr "Onlyoffice Benutzer"
 
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Template"
-msgstr "Vorlage"
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "Onlyoffice user password"
+msgstr "Onlyoffice Passwort"
 
-#: CRM/Onlyoffice/Form/Task/Generator.php
-msgid "Generate!"
-msgstr "PDFs erstellen!"
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid "OK"
+msgstr "Speichern"
 
-#: onlyoffice.php
-msgid "Create PDFs via OnlyOffice"
-msgstr "PDFs mit OnlyOffice erstellen"
+#: CRM/Onlyoffice/Form/Settings/ConnectUser/Selection.php
+msgid "Select user"
+msgstr "Nutzer auswählen"
 
-#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
+#: CRM/Onlyoffice/Queue/Generator/Generator.php
+msgid "Generating document number %1"
+msgstr "Generiere Dokument Nummer %1."
+
+#: CRM/Onlyoffice/Queue/Generator/GeneratorStart.php
+msgid "Starting document generation."
+msgstr "Starte Dokumentengenerierung."
+
+#: CRM/Onlyoffice/Queue/Generator/Launcher.php
+msgid "Generating documents"
+msgstr "Generiere Dokumente."
+
+#: templates/CRM/Onlyoffice/Form/AccountSelection.tpl
 msgid ""
-"You can select any of the documents on your OnlyOffice instance as a "
-"template."
-msgstr "Sie können alle Dokumente in Ihrem OnlyOffice als Vorlage verwenden."
-
-#: templates/CRM/Onlyoffice/Form/Task/Generator.tpl
-msgid ""
-"You'll find our OnlyOffice instance here:\n"
-"    <ul>\n"
-"      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
-"      <li>User: <code>%2</code></li>\n"
-"      <li>Password: <code>%3</code></li>\n"
-"    </ul>\n"
-"    "
+"No connections to Onlyoffice could be found for your account. Please contact "
+"a system administator."
 msgstr ""
-"Sie finden Ihr OnlyOffice hier:\n"
-"    <ul>\n"
-"      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
-"      <li>Benutzer: <code>%2</code></li>\n"
-"      <li>Passwort: <code>%3</code></li>\n"
-"    </ul>\n"
-"    "
+"Es konnten keine Verbindungen mit Onlyoffice gefunden werden. Bitte "
+"kontaktieren Sie Ihren Systemadministrator."
+
+#: templates/CRM/Onlyoffice/Form/TemplateSelection.tpl
+msgid ""
+"There are no templates available for this account. Please create a template "
+"or select another account."
+msgstr ""
+"Es konnten keine Vorlagen gefunden werden. Bitte legen Sie eine Vorlage an "
+"oder wählen Sie einen andere Verbindung aus."
+
+#: templates/CRM/Onlyoffice/Form/Settings/ConnectUser/Connection.php
+msgid ""
+"The administrator disabled the ability for users to connect their accounts "
+"with Onlyoffice. Please contact your administrator."
+msgstr ""
+"Der Administrator hat die Funktion, dass Nutzer sich selbst mit Onlyoffice "
+"verbinden können, deaktiviert. Bitte kontaktieren Sie Ihren Administrator."
+
+#~ msgid "Generate PDFs via OnlyOffice"
+#~ msgstr "OnlyOffice PDFs erstellen"
+
+#~ msgid "Template"
+#~ msgstr "Vorlage"
+
+#~ msgid "Generate!"
+#~ msgstr "PDFs erstellen!"
+
+#~ msgid ""
+#~ "You can select any of the documents on your OnlyOffice instance as a "
+#~ "template."
+#~ msgstr ""
+#~ "Sie können alle Dokumente in Ihrem OnlyOffice als Vorlage verwenden."
+
+#~ msgid ""
+#~ "You'll find our OnlyOffice instance here:\n"
+#~ "    <ul>\n"
+#~ "      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
+#~ "      <li>User: <code>%2</code></li>\n"
+#~ "      <li>Password: <code>%3</code></li>\n"
+#~ "    </ul>\n"
+#~ "    "
+#~ msgstr ""
+#~ "Sie finden Ihr OnlyOffice hier:\n"
+#~ "    <ul>\n"
+#~ "      <li>URL: <a target=\"_blank\" href=\"%1\">%1</a></li>\n"
+#~ "      <li>Benutzer: <code>%2</code></li>\n"
+#~ "      <li>Passwort: <code>%3</code></li>\n"
+#~ "    </ul>\n"
+#~ "    "
 
 #~ msgid ""
 #~ "Visit OnlyOffice by clicking <a target=\"_blank\" href=\"%1\">HERE</a>, "
