@@ -23,7 +23,6 @@
     <path>civicrm/onlyoffice/settings/connectuser/connection</path>
     <page_callback>CRM_Onlyoffice_Form_Settings_ConnectUser_Connection</page_callback>
     <title>OnlyOffice Connect Current User</title>
-    <access_arguments>administer CiviCRM</access_arguments>
     <adminGroup>Communications</adminGroup>
     <icon>admin/small/rela_type.png</icon>
   </item>
