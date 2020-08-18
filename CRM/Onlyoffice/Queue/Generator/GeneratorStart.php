@@ -20,11 +20,14 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Queue_Generator_GeneratorStart extends CRM_Onlyoffice_Queue_Generator_BaseGenerator
 {
-  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_GeneratorData $data)
+  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_GeneratorData $data, int $totalCount)
   {
     parent::__construct($templateFilePath, $data);
 
-    $this->title = E::ts('Starting document generation.');
+    $this->title = E::ts(
+      'Starting generation of %1 documents. Batch size is %2.',
+      [1 => $totalCount, 2 => self::BatchSize]
+    );
   }
 
   public function run(): bool
