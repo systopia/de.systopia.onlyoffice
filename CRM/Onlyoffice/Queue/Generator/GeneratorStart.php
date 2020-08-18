@@ -20,7 +20,7 @@ use CRM_Onlyoffice_ExtensionUtil as E;
  */
 class CRM_Onlyoffice_Queue_Generator_GeneratorStart extends CRM_Onlyoffice_Queue_Generator_BaseGenerator
 {
-  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_PageData $data)
+  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_GeneratorData $data)
   {
     parent::__construct($templateFilePath, $data);
 

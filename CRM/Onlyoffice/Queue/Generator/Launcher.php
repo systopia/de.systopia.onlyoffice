@@ -27,11 +27,11 @@ abstract class CRM_Onlyoffice_Queue_Generator_Launcher extends CRM_Onlyoffice_Qu
 
   /**
    * Launch the runner.
-   * @param CRM_Onlyoffice_Object_PageData $data The data used by the runner.
+   * @param CRM_Onlyoffice_Object_PageData $pageData The data used by the runner.
    * @param string $contactId The contact ID of the user launching the runner.
    * @param string $targetUrl The URL we shall redirect after the runner has been finished.
    */
-  public static function launchRunner(CRM_Onlyoffice_Object_PageData $data, string $contactId, string $targetUrl): void
+  public static function launchRunner(CRM_Onlyoffice_Object_PageData $pageData, string $contactId, string $targetUrl): void
   {
     $queue = CRM_Queue_Service::singleton()->create(
       [
@@ -43,14 +43,29 @@ abstract class CRM_Onlyoffice_Queue_Generator_Launcher extends CRM_Onlyoffice_Qu
 
     $templateFilePath = self::createTempFile('TemplateFile');
 
-    $queue->createItem(new CRM_Onlyoffice_Queue_Generator_GeneratorStart($templateFilePath, $data));
+    $generatorStartData = new CRM_Onlyoffice_Object_GeneratorData();
+    $generatorStartData->templateId = $pageData->templateId;
+    $generatorStartData->zipArchivePath = $pageData->zipArchivePath;
+    $generatorStartData->mainContext = $pageData->mainContext;
+    $generatorStartData->tokenContexts = [];
 
-    $dataCount = count($data->tokenContexts);
+    $dataCount = count($pageData->tokenContexts);
+
+    $queue->createItem(new CRM_Onlyoffice_Queue_Generator_GeneratorStart($templateFilePath, $generatorStartData, $dataCount));
 
     for ($offset = 0; $offset < $dataCount; $offset += self::BatchSize)
     {
-      // TODO: Would slicing the array of tokenContexts be more performant than this offset approach?
-      $queue->createItem(new CRM_Onlyoffice_Queue_Generator_Generator($templateFilePath, $data, $offset, self::BatchSize));
+      $batchedTokenContext = array_slice($pageData->tokenContexts, $offset, self::BatchSize);
+
+      $generatorData = new CRM_Onlyoffice_Object_GeneratorData();
+      $generatorData->templateId = $pageData->templateId;
+      $generatorData->zipArchivePath = $pageData->zipArchivePath;
+      $generatorData->mainContext = $pageData->mainContext;
+      $generatorData->tokenContexts = $batchedTokenContext;
+
+      $queue->createItem(
+        new CRM_Onlyoffice_Queue_Generator_Generator($templateFilePath, $generatorData, $offset, self::BatchSize)
+      );
     }
 
     $runner = new CRM_Queue_Runner(

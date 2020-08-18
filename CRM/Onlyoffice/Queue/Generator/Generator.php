@@ -26,7 +26,7 @@ class CRM_Onlyoffice_Queue_Generator_Generator extends CRM_Onlyoffice_Queue_Gene
   /** @var int $count The number of data sets this generator instance shall work on. */
   protected $count;
 
-  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_PageData $data, int $offset, int $count)
+  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_GeneratorData $data, int $offset, int $count)
   {
     parent::__construct($templateFilePath, $data);
 
@@ -42,13 +42,8 @@ class CRM_Onlyoffice_Queue_Generator_Generator extends CRM_Onlyoffice_Queue_Gene
 
     $zipContainer = $this->openZipFile($this->data->zipArchivePath);
 
-    $start = $this->offset;
-    $end = min($this->offset + $this->count, count($this->data->tokenContexts)) - 1;
-
-    for ($i = $start; $i <= $end; $i++)
+    foreach ($this->data->tokenContexts as $tokenContext)
     {
-      $tokenContext = $this->data->tokenContexts[$i];
-
       $tempFilePath = $this->copyFile($this->templateFilePath);
 
       $onlyofficeSingleton->makeReadyFileFromTemplateFile($tempFilePath, $tokenContext->contexts, $tokenContext->tokens);

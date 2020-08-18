@@ -26,10 +26,10 @@ abstract class CRM_Onlyoffice_Queue_Generator_BaseGenerator extends CRM_Onlyoffi
   /** @var string $templateFilePath The path to the template file that shall be used. */
   protected $templateFilePath;
 
-  /** @var CRM_Onlyoffice_Object_PageData $data The page data for this generator instance. */
+  /** @var CRM_Onlyoffice_Object_GeneratorData $data The data for this generator instance. */
   protected $data;
 
-  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_PageData $data)
+  public function __construct(string $templateFilePath, CRM_Onlyoffice_Object_GeneratorData $data)
   {
     $this->templateFilePath = $templateFilePath;
     $this->data = $data;
