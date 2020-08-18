@@ -68,11 +68,11 @@ msgid "Select user"
 msgstr ""
 
 #: CRM/Onlyoffice/Queue/Generator/Generator.php
-msgid "Generating document number %1"
+msgid "Generating document number %1 to %2."
 msgstr ""
 
 #: CRM/Onlyoffice/Queue/Generator/GeneratorStart.php
-msgid "Starting document generation."
+msgid "Starting generation of %1 documents. Batch size is %2."
 msgstr ""
 
 #: CRM/Onlyoffice/Queue/Generator/Launcher.php
